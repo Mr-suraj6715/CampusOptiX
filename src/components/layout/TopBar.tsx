@@ -11,9 +11,11 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 import { mockNotifications } from '@/data/mockData';
 import { timeAgo } from '@/utils/cn';
 import { GlobalSearchModal } from '@/components/shared/GlobalSearchModal';
+import { LogOut } from 'lucide-react';
 
 interface TopBarProps {
   onToggleMobileMenu: () => void;
@@ -21,12 +23,12 @@ interface TopBarProps {
 
 export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
   const { isDark, toggleTheme } = useTheme();
+  const { user, logout, login } = useAuth();
   const navigate = useNavigate();
 
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [currentRole, setCurrentRole] = useState<'Administrator' | 'Dean' | 'HOD' | 'Scheduler'>('Administrator');
 
   const notifRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -214,14 +216,14 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
                 className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold"
                 style={{ backgroundColor: 'var(--bg-inverse)', color: 'var(--text-inverse)' }}
               >
-                SY
+                {user?.avatar || 'U'}
               </div>
               <div className="hidden sm:flex flex-col text-left">
                 <span className="text-[12px] font-medium leading-tight" style={{ color: 'var(--text-primary)' }}>
-                  Suraj Yadav
+                  {user?.name || 'User'}
                 </span>
-                <span className="text-[10px] leading-tight" style={{ color: 'var(--text-tertiary)' }}>
-                  {currentRole}
+                <span className="text-[10px] leading-tight font-medium capitalize text-blue-600 dark:text-blue-400">
+                  {user?.role?.toLowerCase() || 'student'}
                 </span>
               </div>
               <ChevronDown className="w-3 h-3 hidden sm:block" style={{ color: 'var(--text-tertiary)' }} />
@@ -229,7 +231,7 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
 
             {showProfileMenu && (
               <div
-                className="absolute right-0 mt-2 w-56 rounded-2xl shadow-lg z-50 p-1.5"
+                className="absolute right-0 mt-2 w-64 rounded-2xl shadow-lg z-50 p-2"
                 style={{
                   backgroundColor: 'var(--surface-1)',
                   border: '1px solid var(--border-primary)',
@@ -237,39 +239,54 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
                 }}
               >
                 {/* Profile Header */}
-                <div className="px-3 py-2.5 rounded-xl mb-1" style={{ backgroundColor: 'var(--surface-2)' }}>
-                  <p className="text-[13px] font-semibold" style={{ color: 'var(--text-primary)' }}>Suraj Yadav</p>
-                  <p className="text-[11px]" style={{ color: 'var(--text-tertiary)' }}>admin@campusoptix.edu</p>
+                <div className="px-3 py-2.5 rounded-xl mb-1 bg-[var(--surface-2)]">
+                  <p className="text-[13px] font-semibold text-[var(--text-primary)]">{user?.name}</p>
+                  <p className="text-[11px] text-[var(--text-tertiary)]">{user?.email}</p>
+                  <span className="inline-block mt-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">
+                    Role: {user?.role}
+                  </span>
                 </div>
 
-                {/* Role Switcher */}
+                {/* Quick Switch Persona */}
                 <div className="py-1">
-                  <p className="section-label px-3 py-1.5">Role</p>
-                  {(['Administrator', 'Dean', 'HOD', 'Scheduler'] as const).map((role) => (
+                  <p className="section-label px-3 py-1.5">Switch Demo Persona</p>
+                  {[
+                    { role: 'ADMIN' as const, label: 'Administrator' },
+                    { role: 'FACULTY' as const, label: 'Faculty Member' },
+                    { role: 'STUDENT' as const, label: 'Student' },
+                  ].map((item) => (
                     <button
-                      key={role}
-                      onClick={() => { setCurrentRole(role); setShowProfileMenu(false); }}
-                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[12px] transition-colors ${
-                        currentRole === role ? 'font-semibold' : ''
+                      key={item.role}
+                      onClick={() => { login(item.role); setShowProfileMenu(false); }}
+                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[12px] transition-colors cursor-pointer ${
+                        user?.role === item.role ? 'font-semibold' : ''
                       }`}
                       style={{
-                        backgroundColor: currentRole === role ? 'var(--surface-3)' : 'transparent',
-                        color: currentRole === role ? 'var(--text-primary)' : 'var(--text-secondary)',
+                        backgroundColor: user?.role === item.role ? 'var(--surface-3)' : 'transparent',
+                        color: user?.role === item.role ? 'var(--text-primary)' : 'var(--text-secondary)',
                       }}
                     >
-                      <span>{role}</span>
-                      {currentRole === role && <CheckCircle2 className="w-3 h-3" />}
+                      <span>{item.label}</span>
+                      {user?.role === item.role && <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
                 </div>
 
-                <div className="mt-1 pt-1" style={{ borderTop: '1px solid var(--border-primary)' }}>
+                <div className="mt-1 pt-1 border-t border-[var(--border-primary)] space-y-1">
                   <button
                     onClick={() => { setShowProfileMenu(false); navigate('/settings'); }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-colors btn-subtle"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-colors text-[var(--text-secondary)] hover:bg-[var(--surface-2)] cursor-pointer"
                   >
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span>Settings</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setShowProfileMenu(false); logout(); navigate('/login'); }}
+                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-colors text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
                   </button>
                 </div>
               </div>

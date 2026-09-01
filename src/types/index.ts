@@ -208,3 +208,17 @@ export interface TimeSeriesPoint {
   labs: number;
   halls: number;
 }
+
+// ==============================
+// Authentication & User Roles
+// ==============================
+export type UserRole = 'ADMIN' | 'FACULTY' | 'STUDENT';
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  department?: string;
+  avatar?: string;
+}

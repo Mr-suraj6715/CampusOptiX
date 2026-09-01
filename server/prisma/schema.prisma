@@ -1,0 +1,528 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  HOD
+  FACULTY
+  LAB_INCHARGE
+  STUDENT
+}
+
+enum RoomType {
+  CLASSROOM
+  COMPUTER_LAB
+  SCIENCE_LAB
+  SEMINAR_HALL
+  AUDITORIUM
+  WORKSHOP
+  MEETING_ROOM
+  OTHER
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  MAINTENANCE
+  UNDERUTILIZED
+  OVERCROWDED
+}
+
+enum EquipmentStatus {
+  WORKING
+  FAULTY
+  MISSING
+  UNDER_REPAIR
+}
+
+enum ConflictType {
+  CAPACITY
+  ROOM_TIME
+  FACULTY_TIME
+  EQUIPMENT
+  ROOM_TYPE
+  RESOURCE_UNAVAILABLE
+}
+
+enum ConflictSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ConflictStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+  IGNORED
+}
+
+enum RecommendationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum TimetableStatus {
+  SCHEDULED
+  ACTIVE
+  CANCELLED
+  CONFLICT
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum OptimizationTrigger {
+  MANUAL
+  AUTOMATIC
+  EMERGENCY
+  SIMULATION
+}
+
+enum OptimizationRunStatus {
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  CRITICAL
+  ROOM_CHANGE
+  CONFLICT
+  OPTIMIZATION
+}
+
+enum SimulationScenarioType {
+  ROOM_UNAVAILABLE
+  ADDITIONAL_STUDENTS
+  FACULTY_UNAVAILABLE
+  NEW_CLASS
+  CUSTOM
+}
+
+// ==========================================
+// 1. User & Authentication (Section 4 & 21)
+// ==========================================
+model User {
+  id             String         @id @default(uuid())
+  name           String
+  email          String         @unique
+  passwordHash   String
+  role           Role           @default(STUDENT)
+  departmentId   String?
+  department     Department?    @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  facultyProfile Faculty?
+  notifications  Notification[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([email])
+  @@index([role])
+  @@index([departmentId])
+}
+
+// ==========================================
+// 2. Academic Department (Section 5)
+// ==========================================
+model Department {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  code      String     @unique
+  users     User[]
+  faculty   Faculty[]
+  courses   Course[]
+  classes   Class[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+// ==========================================
+// 3. Campus Infrastructure: Building (Section 6)
+// ==========================================
+model Building {
+  id                 String              @id @default(uuid())
+  name               String              @unique
+  code               String              @unique
+  address            String?
+  latitude           Float?              // For student travel distance optimization
+  longitude          Float?              // For student travel distance optimization
+  floors             Int                 @default(4)
+  rooms              Room[]
+  facultyPreferences FacultyPreference[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+// ==========================================
+// 4. Room (Section 7)
+// ==========================================
+model Room {
+  id                   String               @id @default(uuid())
+  roomCode             String               @unique
+  name                 String
+  buildingId           String
+  building             Building             @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  floor                Int
+  capacity             Int
+  type                 RoomType             @default(CLASSROOM)
+  status               RoomStatus           @default(AVAILABLE)
+  utilizationThreshold Float                @default(40.0)
+  utilization          Float                @default(0.0)
+  description          String?
+  amenities            String[]             @default([])
+  roomEquipments       RoomEquipment[]
+  classes              Class[]
+  timetables           Timetable[]
+  conflicts            Conflict[]
+  recommendedFor       Recommendation[]     @relation("RecommendedRoom")
+  oldOptimizationChanges OptimizationChange[] @relation("ChangeOldRoom")
+  newOptimizationChanges OptimizationChange[] @relation("ChangeNewRoom")
+  historyBefore        OptimizationHistory[] @relation("HistoryBefore")
+  historyAfter         OptimizationHistory[] @relation("HistoryAfter")
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([buildingId])
+  @@index([status])
+  @@index([type])
+  @@index([capacity])
+}
+
+// ==========================================
+// 5. Equipment & Hardware Inventory (Section 8)
+// ==========================================
+model Equipment {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  type           String          @default("General")
+  quantity       Int             @default(1)
+  description    String?
+  roomEquipments RoomEquipment[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model RoomEquipment {
+  id          String          @id @default(uuid())
+  roomId      String
+  room        Room            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  equipmentId String
+  equipment   Equipment       @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  quantity    Int             @default(1)
+  status      EquipmentStatus @default(WORKING)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@unique([roomId, equipmentId])
+  @@index([roomId])
+  @@index([equipmentId])
+}
+
+// ==========================================
+// 6. Faculty Profile (Section 9)
+// ==========================================
+model Faculty {
+  id           String              @id @default(uuid())
+  userId       String              @unique
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  facultyCode  String              @unique
+  departmentId String
+  department   Department          @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  designation  String              @default("Assistant Professor")
+  phone        String?
+  workload     Int                 @default(0)
+  maxWorkload  Int                 @default(18)
+  specialties  String[]            @default([])
+  preferences  FacultyPreference[]
+  classes      Class[]
+  timetables   Timetable[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([departmentId])
+  @@index([facultyCode])
+}
+
+// ==========================================
+// 7. Faculty Preferences (Section 10 & 39)
+// ==========================================
+model FacultyPreference {
+  id                  String     @id @default(uuid())
+  facultyId           String
+  faculty             Faculty    @relation(fields: [facultyId], references: [id], onDelete: Cascade)
+  preferredDay        DayOfWeek? @default(MONDAY)
+  preferredStartTime  String?    @default("09:00")
+  preferredEndTime    String?    @default("13:00")
+  preferredBuildingId String?
+  preferredBuilding   Building?  @relation(fields: [preferredBuildingId], references: [id], onDelete: SetNull)
+  priority            Int        @default(3) // 1 (low) to 5 (high) soft constraint weight
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@index([facultyId])
+  @@index([preferredBuildingId])
+}
+
+// ==========================================
+// 8. Course (Section 11)
+// ==========================================
+model Course {
+  id                      String     @id @default(uuid())
+  courseCode              String     @unique
+  name                    String
+  departmentId            String
+  department              Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  credits                 Int        @default(4)
+  requiredRoomType        RoomType   @default(CLASSROOM)
+  requiredStudentCapacity Int        @default(40)
+  classes                 Class[]
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+
+  @@index([courseCode])
+  @@index([departmentId])
+}
+
+// ==========================================
+// 9. Class Offering (Section 12)
+// ==========================================
+model Class {
+  id                  String               @id @default(uuid())
+  courseId            String
+  course              Course               @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  facultyId           String?
+  faculty             Faculty?             @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  departmentId        String
+  department          Department           @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  year                Int                  @default(1)
+  division            String               @default("Div A")
+  studentCount        Int                  @default(40)
+  requiredRoomType    RoomType             @default(CLASSROOM)
+  priority            Int                  @default(3)
+  requiredEquipment   String[]             @default([])
+  assignedRoomId      String?
+  assignedRoom        Room?                @relation(fields: [assignedRoomId], references: [id], onDelete: SetNull)
+  timetables          Timetable[]
+  conflicts           Conflict[]
+  optimizationChanges OptimizationChange[]
+  attendances         Attendance[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([courseId])
+  @@index([departmentId])
+  @@index([facultyId])
+  @@index([assignedRoomId])
+}
+
+// ==========================================
+// 10. Master Timetable Matrix (Section 13 & 50)
+// ==========================================
+model Timetable {
+  id        String          @id @default(uuid())
+  classId   String
+  class     Class           @relation(fields: [classId], references: [id], onDelete: Cascade)
+  roomId    String
+  room      Room            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  facultyId String?
+  faculty   Faculty?        @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  dayOfWeek DayOfWeek
+  startTime String          // Format: "HH:MM"
+  endTime   String          // Format: "HH:MM"
+  status    TimetableStatus @default(SCHEDULED)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([roomId, dayOfWeek, startTime])
+  @@index([facultyId, dayOfWeek, startTime])
+  @@index([dayOfWeek, startTime, endTime])
+  @@index([classId])
+  @@index([status])
+}
+
+// ==========================================
+// 11. Conflicts & Anomaly Center (Section 14 & 50)
+// ==========================================
+model Conflict {
+  id              String                @id @default(uuid())
+  type            ConflictType
+  severity        ConflictSeverity      @default(HIGH)
+  classId         String?
+  class           Class?                @relation(fields: [classId], references: [id], onDelete: SetNull)
+  roomId          String?
+  room            Room?                 @relation(fields: [roomId], references: [id], onDelete: SetNull)
+  description     String
+  detectedAt      DateTime              @default(now())
+  status          ConflictStatus        @default(OPEN)
+  recommendations Recommendation[]
+  history         OptimizationHistory[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([type])
+  @@index([severity])
+  @@index([status])
+  @@index([classId])
+  @@index([roomId])
+}
+
+// ==========================================
+// 12. Recommendation Engine (Section 15)
+// ==========================================
+model Recommendation {
+  id                     String               @id @default(uuid())
+  conflictId             String
+  conflict               Conflict             @relation(fields: [conflictId], references: [id], onDelete: Cascade)
+  recommendedRoomId      String
+  recommendedRoom        Room                 @relation("RecommendedRoom", fields: [recommendedRoomId], references: [id], onDelete: Cascade)
+  score                  Float                @default(90.0)
+  reason                 String
+  capacityScore          Float                @default(0.0)
+  equipmentScore         Float                @default(0.0)
+  availabilityScore      Float                @default(0.0)
+  roomTypeScore          Float                @default(0.0)
+  utilizationScore       Float                @default(0.0)
+  facultyPreferenceScore Float                @default(0.0)
+  studentTravelScore     Float                @default(0.0)
+  status                 RecommendationStatus @default(PENDING)
+  approvedBy             String?
+  approvedAt             DateTime?
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@index([conflictId])
+  @@index([recommendedRoomId])
+  @@index([status])
+}
+
+// ==========================================
+// 13. Optimization Run (Section 16)
+// ==========================================
+model OptimizationRun {
+  id                String                @id @default(uuid())
+  startedAt         DateTime              @default(now())
+  completedAt       DateTime?
+  trigger           OptimizationTrigger   @default(MANUAL)
+  status            OptimizationRunStatus @default(COMPLETED)
+  beforeUtilization Float                 @default(0.0)
+  afterUtilization  Float                 @default(0.0)
+  conflictsBefore   Int                   @default(0)
+  conflictsAfter    Int                   @default(0)
+  changes           OptimizationChange[]
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@index([trigger])
+  @@index([status])
+  @@index([startedAt])
+}
+
+// ==========================================
+// 14. Optimization Change (Section 17)
+// ==========================================
+model OptimizationChange {
+  id                String          @id @default(uuid())
+  optimizationRunId String
+  optimizationRun   OptimizationRun @relation(fields: [optimizationRunId], references: [id], onDelete: Cascade)
+  classId           String
+  class             Class           @relation(fields: [classId], references: [id], onDelete: Cascade)
+  oldRoomId         String?
+  oldRoom           Room?           @relation("ChangeOldRoom", fields: [oldRoomId], references: [id], onDelete: SetNull)
+  newRoomId         String
+  newRoom           Room            @relation("ChangeNewRoom", fields: [newRoomId], references: [id], onDelete: Cascade)
+  oldTime           String?
+  newTime           String?
+  reason            String?
+  improvementScore  Float           @default(0.0)
+  createdAt         DateTime        @default(now())
+
+  @@index([optimizationRunId])
+  @@index([classId])
+}
+
+// ==========================================
+// 15. Notification System (Section 18 & 42)
+// ==========================================
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String?
+  user      User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead])
+  @@index([type])
+}
+
+// ==========================================
+// 16. Attendance Tracking (Section 19)
+// ==========================================
+model Attendance {
+  id                String   @id @default(uuid())
+  classId           String
+  class             Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  date              DateTime @default(now())
+  scheduledStudents Int
+  presentStudents   Int
+  createdAt         DateTime @default(now())
+
+  @@index([classId, date])
+}
+
+// ==========================================
+// 17. What-If Campus Simulation (Section 20 & 37)
+// ==========================================
+model Simulation {
+  id           String                 @id @default(uuid())
+  createdBy    String
+  scenarioType SimulationScenarioType @default(ROOM_UNAVAILABLE)
+  inputData    Json
+  resultData   Json
+  createdAt    DateTime               @default(now())
+
+  @@index([scenarioType])
+  @@index([createdAt])
+}
+
+// ==========================================
+// 18. Optimization History (Section 21 & 43)
+// ==========================================
+model OptimizationHistory {
+  id           String   @id @default(uuid())
+  conflictId   String
+  conflict     Conflict @relation(fields: [conflictId], references: [id], onDelete: Cascade)
+  problem      String
+  beforeRoomId String
+  beforeRoom   Room     @relation("HistoryBefore", fields: [beforeRoomId], references: [id], onDelete: Cascade)
+  afterRoomId  String
+  afterRoom    Room     @relation("HistoryAfter", fields: [afterRoomId], references: [id], onDelete: Cascade)
+  improvement  Float    @default(0.0)
+  approvedBy   String
+  status       String   @default("APPROVED")
+  createdAt    DateTime @default(now())
+
+  @@index([conflictId])
+  @@index([createdAt])
+}

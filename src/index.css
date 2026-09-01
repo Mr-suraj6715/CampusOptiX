@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Base design system – clean neutral palette */
+    --bg-primary:       #fafafa;
+    --bg-secondary:     #f4f4f5;
+    --bg-tertiary:      #e4e4e7;
+    --bg-inverse:       #09090b;
+    --bg-inverse-hover: #18181b;
+
+    --surface-1:        #ffffff;
+    --surface-2:        #f4f4f5;
+    --surface-3:        #e4e4e7;
+
+    --border-primary:   #e4e4e7;
+    --border-secondary: #d4d4d8;
+
+    --text-primary:     #0a0a0a;
+    --text-secondary:   #1c1c1e;
+    --text-tertiary:    #3a3a3c;
+    --text-inverse:     #fafafa;
+
+    /* Glass variables */
+    --glass-bg:         rgba(250, 250, 250, 0.72);
+    --glass-border:     rgba(0, 0, 0, 0.08);
+
+    /* Accent (kept subtle) */
+    --accent:           #2563eb;
+    --accent-hover:     #1d4ed8;
+    --accent-text:      #eff6ff;
+
+    --sidebar-width: 240px;
+    --topbar-height: 56px;
+    --radius-pill: 9999px;
+  }
+
+  .dark {
+    --bg-primary:       #09090b;
+    --bg-secondary:     #111113;
+    --bg-tertiary:      #18181b;
+    --bg-inverse:       #fafafa;
+    --bg-inverse-hover: #e4e4e7;
+
+    --surface-1:        #111113;
+    --surface-2:        #18181b;
+    --surface-3:        #27272a;
+
+    --border-primary:   #27272a;
+    --border-secondary: #3f3f46;
+
+    --text-primary:     #fafafa;
+    --text-secondary:   #a1a1aa;
+    --text-tertiary:    #71717a;
+    --text-inverse:     #09090b;
+
+    --glass-bg:         rgba(17, 17, 19, 0.72);
+    --glass-border:     rgba(255, 255, 255, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02","cv03","cv04","cv11";
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::selection {
+    background: #2563eb22;
+    color: var(--text-primary);
+  }
+}
+
+/* ─── Global Light-Mode Text Contrast Overrides ─────────
+   Forces ALL hardcoded slate/gray/zinc light text classes
+   to become dark and readable in light mode. ──────────── */
+.text-slate-300, .text-gray-300, .text-zinc-300 { color: #374151 !important; }
+.text-slate-400, .text-gray-400, .text-zinc-400 { color: #1f2937 !important; }
+.text-slate-500, .text-gray-500, .text-zinc-500 { color: #111827 !important; }
+.text-slate-600, .text-gray-600, .text-zinc-600 { color: #0f172a !important; }
+
+.dark .text-slate-300, .dark .text-gray-300, .dark .text-zinc-300 { color: #d1d5db !important; }
+.dark .text-slate-400, .dark .text-gray-400, .dark .text-zinc-400 { color: #e5e7eb !important; }
+.dark .text-slate-500, .dark .text-gray-500, .dark .text-zinc-500 { color: #f3f4f6 !important; }
+.dark .text-slate-600, .dark .text-gray-600, .dark .text-zinc-600 { color: #f9fafb !important; }
+
+/* ─── Glass Panel ─────────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid var(--glass-border);
+}
+
+/* ─── Pill Nav (Base-style floating navbar) ───────────── */
+.pill-nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 9999px;
+}
+
+/* ─── Subtle Surface Card ─────────────────────────────── */
+.surface-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dark .surface-card {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Inverse Button (Base's pill CTA) ────────────────── */
+.btn-inverse {
+  background-color: var(--bg-inverse);
+  color: var(--text-inverse);
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+.btn-inverse:hover { background-color: var(--bg-inverse-hover); }
+
+/* ─── Subtle Button ───────────────────────────────────── */
+.btn-subtle {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.btn-subtle:hover {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+}
+
+/* ─── Section Label ───────────────────────────────────── */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ─── Stat Card (Dashboard KPI) ──────────────────────── */
+.stat-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 20px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.stat-card:hover {
+  border-color: var(--border-secondary);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.06);
+}
+.dark .stat-card:hover {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Table ───────────────────────────────────────────── */
+.base-table th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  background-color: var(--surface-2);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-primary);
+}
+.base-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-primary);
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.base-table tr:last-child td { border-bottom: none; }
+.base-table tr:hover td { background-color: var(--surface-2); }
+
+/* ─── Status Pills ─────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.pill-success  { background: #dcfce7; color: #15803d; }
+.pill-warning  { background: #fef9c3; color: #a16207; }
+.pill-error    { background: #fee2e2; color: #b91c1c; }
+.pill-info     { background: #dbeafe; color: #1d4ed8; }
+.pill-neutral  { background: var(--surface-3); color: var(--text-secondary); }
+
+.dark .pill-success { background: #14532d44; color: #86efac; }
+.dark .pill-warning { background: #71350144; color: #fde68a; }
+.dark .pill-error   { background: #7f1d1d44; color: #fca5a5; }
+.dark .pill-info    { background: #1e3a8a44; color: #93c5fd; }
+.dark .pill-neutral { background: var(--surface-3); color: var(--text-secondary); }
+
+/* ─── Focus Ring ──────────────────────────────────────── */
+.focus-ring:focus-visible {
+  outline: 2px solid #2563eb88;
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar (minimal) ─────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* ─── Input / Select ──────────────────────────────────── */
+.base-input {
+  background: var(--surface-1);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  width: 100%;
+}
+.base-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px #2563eb1a;
+}
+.base-input::placeholder { color: var(--text-tertiary); }

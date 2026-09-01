@@ -1,0 +1,30 @@
+services:
+  # ─── Backend API (Node.js + Express + Prisma) ───────────
+  - type: web
+    name: campusoptix-api
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: server
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && npx ts-node prisma/seed.ts && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: campusoptix-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        value: https://campus-opti-x.vercel.app
+      - key: PORT
+        value: 10000
+
+databases:
+  - name: campusoptix-db
+    plan: free
+    region: oregon
+    databaseName: campusoptix_db
+    user: campusoptix_user

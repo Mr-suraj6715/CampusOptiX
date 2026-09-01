@@ -9,9 +9,10 @@
     "start": "node dist/server.js",
     "test": "ts-node tests/testRunner.ts",
     "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push --accept-data-loss",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:deploy": "prisma migrate deploy",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:deploy": "prisma db push --accept-data-loss",
+    "prisma:seed": "ts-node --transpile-only prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",

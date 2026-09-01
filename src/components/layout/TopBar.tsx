@@ -210,7 +210,7 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setShowProfileMenu((prev) => !prev)}
-              className="flex items-center gap-2 p-1.5 rounded-xl transition-colors focus-ring hover:bg-[--surface-2]"
+              className="flex items-center gap-2 p-1.5 rounded-xl transition-colors focus-ring hover:bg-[--surface-2] cursor-pointer"
             >
               <div
                 className="w-7 h-7 rounded-lg flex items-center justify-center text-[11px] font-bold"
@@ -222,8 +222,8 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
                 <span className="text-[12px] font-medium leading-tight" style={{ color: 'var(--text-primary)' }}>
                   {user?.name || 'User'}
                 </span>
-                <span className="text-[10px] leading-tight font-medium capitalize text-blue-600 dark:text-blue-400">
-                  {user?.role?.toLowerCase() || 'student'}
+                <span className="text-[10px] leading-tight font-semibold capitalize text-blue-600 dark:text-blue-400">
+                  {user?.role === 'ADMIN' ? 'Administrator' : user?.role === 'FACULTY' ? 'Faculty' : 'Student'}
                 </span>
               </div>
               <ChevronDown className="w-3 h-3 hidden sm:block" style={{ color: 'var(--text-tertiary)' }} />
@@ -286,12 +286,22 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
                     className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-colors text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 font-medium cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
+                    <span>Sign Out / Logout</span>
                   </button>
                 </div>
               </div>
             )}
           </div>
+
+          {/* Prominent Direct Logout Header Button */}
+          <button
+            onClick={() => { logout(); navigate('/login'); }}
+            title="Logout"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-200 dark:border-red-900/40 transition-all cursor-pointer shadow-2xs"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Logout</span>
+          </button>
         </div>
       </header>
 

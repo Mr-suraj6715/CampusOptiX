@@ -37,10 +37,10 @@ export function DataTable<T>({
     <div className={cn('bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs', className)}>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs sm:text-sm">
-          <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-semibold uppercase text-[11px]">
+          <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px] text-slate-800 dark:text-slate-100">
             <tr>
               {columns.map((col, idx) => (
-                <th key={idx} className={cn('px-4 py-3', col.className)}>
+                <th key={idx} className={cn('px-4 py-3 text-slate-800 dark:text-slate-100', col.className)}>
                   {col.header}
                 </th>
               ))}

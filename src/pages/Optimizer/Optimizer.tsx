@@ -251,19 +251,19 @@ export const Optimizer = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 dark:from-violet-400 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">
               Campus AI Resource Optimizer
             </h1>
             <Badge variant="purple">Constraint Solver v2.4</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 mt-1 font-medium">
             Explainable AI decision support for resolving capacity bottlenecks and timetable anomalies.
           </p>
         </div>
 
         {/* Case Switcher */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-medium">Scenario:</span>
+          <span className="text-xs text-slate-800 dark:text-slate-200 font-bold">Scenario:</span>
           {OPTIMIZER_CASES.map((item, idx) => (
             <button
               key={item.id}
@@ -271,7 +271,7 @@ export const Optimizer = () => {
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 selectedCaseIndex === idx
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
+                  : 'bg-slate-200/80 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/60 dark:border-slate-700'
               }`}
             >
               {item.course}
@@ -341,20 +341,20 @@ export const Optimizer = () => {
               <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
                 {currentCase.course}
               </h2>
-              <p className="text-xs text-slate-400 font-mono">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-mono font-medium">
                 {currentCase.courseCode} • {currentCase.faculty}
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-red-50/60 dark:bg-red-950/30 border border-red-200 dark:border-red-900 text-xs">
               <div>
-                <span className="text-[10px] font-semibold uppercase text-slate-400">Enrolled Students</span>
+                <span className="text-[10px] font-bold uppercase text-slate-800 dark:text-slate-200">Enrolled Students</span>
                 <p className="text-base font-extrabold text-red-600 dark:text-red-400">
                   {currentCase.students} Students
                 </p>
               </div>
               <div>
-                <span className="text-[10px] font-semibold uppercase text-slate-400">Scheduled Time</span>
+                <span className="text-[10px] font-bold uppercase text-slate-800 dark:text-slate-200">Scheduled Time</span>
                 <p className="font-bold text-slate-900 dark:text-slate-100">
                   {currentCase.time}
                 </p>
@@ -419,7 +419,7 @@ export const Optimizer = () => {
                           <Badge variant="success">Best Match</Badge>
                         )}
                       </div>
-                      <span className="text-[11px] text-slate-400">{cand.building}, Fl {cand.floor}</span>
+                      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{cand.building}, Fl {cand.floor}</span>
                     </div>
 
                     <div className="text-right">
@@ -429,18 +429,18 @@ export const Optimizer = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-1 text-[11px] text-slate-600 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
+                  <div className="grid grid-cols-3 gap-1 text-[11px] text-slate-800 dark:text-slate-200 pt-1 border-t border-slate-200 dark:border-slate-700">
                     <div>
-                      <span className="text-[10px] text-slate-400">Capacity:</span>
-                      <p className="font-bold text-slate-800 dark:text-slate-200">{cand.capacity}</p>
+                      <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Capacity:</span>
+                      <p className="font-bold text-slate-900 dark:text-white">{cand.capacity}</p>
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400">Equipment:</span>
-                      <p className="font-semibold text-emerald-600 dark:text-emerald-400">Available</p>
+                      <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Equipment:</span>
+                      <p className="font-bold text-emerald-600 dark:text-emerald-400">Available</p>
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400">Time:</span>
-                      <p className="font-semibold text-emerald-600 dark:text-emerald-400">Available</p>
+                      <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">Time:</span>
+                      <p className="font-bold text-emerald-600 dark:text-emerald-400">Available</p>
                     </div>
                   </div>
                 </div>
@@ -564,7 +564,7 @@ export const Optimizer = () => {
           <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             Before vs After Reallocation Impact
           </h2>
-          <span className="text-xs text-slate-400">Simulation Comparison Model</span>
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Simulation Comparison Model</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -579,28 +579,28 @@ export const Optimizer = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Room</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Room</span>
                 <p className="text-base font-bold text-slate-900 dark:text-slate-100 font-mono mt-0.5">
                   {currentCase.beforeStats.room}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Capacity</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Capacity</span>
                 <p className="text-base font-bold text-slate-900 dark:text-slate-100 mt-0.5">
                   {currentCase.beforeStats.capacity}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Students</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Students</span>
                 <p className="text-base font-bold text-red-600 dark:text-red-400 mt-0.5">
                   {currentCase.beforeStats.students}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Conflict Count</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Conflict Count</span>
                 <p className="text-base font-bold text-red-600 dark:text-red-400 mt-0.5">
                   {currentCase.beforeStats.conflicts}
                 </p>
@@ -609,7 +609,7 @@ export const Optimizer = () => {
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-400">Baseline Room Utilization</span>
+                <span className="text-slate-800 dark:text-slate-200 font-bold">Baseline Room Utilization</span>
                 <span className="text-slate-900 dark:text-slate-100 font-bold">{currentCase.beforeStats.utilization}%</span>
               </div>
               <ProgressBar value={currentCase.beforeStats.utilization} size="md" color="bg-red-500" />
@@ -627,28 +627,28 @@ export const Optimizer = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Room</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Room</span>
                 <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 font-mono mt-0.5">
                   {currentCase.afterStats.room}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Capacity</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Capacity</span>
                 <p className="text-base font-bold text-slate-900 dark:text-slate-100 mt-0.5">
                   {currentCase.afterStats.capacity}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Students</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Students</span>
                 <p className="text-base font-bold text-slate-900 dark:text-slate-100 mt-0.5">
                   {currentCase.afterStats.students}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">Conflict Count</span>
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold">Conflict Count</span>
                 <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
                   {currentCase.afterStats.conflicts}
                 </p>
@@ -657,7 +657,7 @@ export const Optimizer = () => {
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-400">Optimized Room Utilization</span>
+                <span className="text-slate-800 dark:text-slate-200 font-bold">Optimized Room Utilization</span>
                 <span className="text-emerald-600 dark:text-emerald-400 font-bold">{currentCase.afterStats.utilization}%</span>
               </div>
               <ProgressBar value={currentCase.afterStats.utilization} size="md" color="bg-emerald-500" />

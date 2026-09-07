@@ -258,9 +258,8 @@ export const TopBar = ({ onToggleMobileMenu }: TopBarProps) => {
                     <button
                       key={item.role}
                       onClick={() => { login(item.role); setShowProfileMenu(false); }}
-                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[12px] transition-colors cursor-pointer ${
-                        user?.role === item.role ? 'font-semibold' : ''
-                      }`}
+                      className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[12px] transition-colors cursor-pointer ${user?.role === item.role ? 'font-semibold' : ''
+                        }`}
                       style={{
                         backgroundColor: user?.role === item.role ? 'var(--surface-3)' : 'transparent',
                         color: user?.role === item.role ? 'var(--text-primary)' : 'var(--text-secondary)',

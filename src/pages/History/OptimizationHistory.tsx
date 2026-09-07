@@ -187,12 +187,12 @@ export const OptimizationHistory = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-slate-800 via-indigo-600 to-blue-600 dark:from-indigo-300 dark:via-sky-300 dark:to-cyan-300 bg-clip-text text-transparent">
               Optimization History & Audit Log
             </h1>
             <Badge variant="purple">{historyList.length} Reallocations</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 mt-1 font-medium">
             Complete historical trail of approved timetable reallocations, space improvements, and authority sign-offs.
           </p>
         </div>
@@ -261,8 +261,8 @@ export const OptimizationHistory = () => {
                 <div className="space-y-2.5 flex-1">
                   {/* Header: Date, Problem, Status */}
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    <span className="font-mono text-xs text-slate-400 flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
+                    <span className="font-mono text-xs text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-blue-500" />
                       {item.date}
                     </span>
                     <Badge
@@ -276,28 +276,28 @@ export const OptimizationHistory = () => {
                     >
                       {item.status}
                     </Badge>
-                    <span className="font-mono text-xs text-slate-400 font-bold">{item.id}</span>
+                    <span className="font-mono text-xs text-slate-800 dark:text-slate-200 font-bold">{item.id}</span>
                   </div>
 
                   <div>
                     <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                       {item.problem}
                     </h3>
-                    <p className="text-xs text-slate-500 font-mono">{item.course}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300 font-semibold font-mono">{item.course}</p>
                   </div>
 
                   {/* Before vs After Summary (Matching Section 21 Example) */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs">
                     {/* Before */}
                     <div className="space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-slate-400">
+                      <span className="text-[10px] uppercase font-bold text-slate-800 dark:text-slate-200">
                         Before:
                       </span>
                       <p className="font-bold text-slate-900 dark:text-slate-100">
                         {item.before.room} (Capacity: {item.before.capacity})
                       </p>
-                      <p className="text-slate-500 text-[11px]">
-                        Conflicts: <strong className="text-red-500">{item.before.conflict}</strong> • Util: {item.before.utilization}%
+                      <p className="text-slate-700 dark:text-slate-300 font-medium text-[11px]">
+                        Conflicts: <strong className="text-red-600 font-bold">{item.before.conflict}</strong> • Util: {item.before.utilization}%
                       </p>
                     </div>
 
@@ -309,20 +309,20 @@ export const OptimizationHistory = () => {
                       <p className="font-bold text-emerald-600 dark:text-emerald-400">
                         {item.after.room} (Capacity: {item.after.capacity})
                       </p>
-                      <p className="text-slate-500 text-[11px]">
-                        Conflicts: <strong className="text-emerald-600">0</strong> • Util: {item.after.utilization}%
+                      <p className="text-slate-700 dark:text-slate-300 font-medium text-[11px]">
+                        Conflicts: <strong className="text-emerald-600 font-bold">0</strong> • Util: {item.after.utilization}%
                       </p>
                     </div>
                   </div>
 
                   {/* Improvement & Sign-off */}
-                  <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 pt-1 flex-wrap gap-2">
-                    <span className="font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                  <div className="flex items-center justify-between text-xs text-slate-800 dark:text-slate-200 pt-1 flex-wrap gap-2">
+                    <span className="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
                       Improvement: {item.improvement}
                     </span>
                     <span className="font-medium">
-                      Approved By: <strong className="text-slate-900 dark:text-slate-100">{item.approvedBy}</strong>
+                      Approved By: <strong className="text-slate-950 dark:text-white font-bold">{item.approvedBy}</strong>
                     </span>
                   </div>
                 </div>

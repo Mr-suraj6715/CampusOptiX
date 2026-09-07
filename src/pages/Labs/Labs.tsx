@@ -27,8 +27,11 @@ import { RoomStatusBadge } from '@/components/shared/StatusBadge';
 import { mockLabs } from '@/data/mockData';
 import type { Lab, RoomStatus } from '@/types';
 import { formatPercent, getUtilizationColor } from '@/utils/cn';
+import { useAuth } from '@/context/AuthContext';
 
 export const Labs = () => {
+  const { user } = useAuth();
+  const isStudent = user?.role === 'STUDENT';
   const navigate = useNavigate();
   const [labsList, setLabsList] = useState<Lab[]>(mockLabs);
   const [searchQuery, setSearchQuery] = useState('');
@@ -110,24 +113,26 @@ export const Labs = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 dark:from-purple-400 dark:via-violet-300 dark:to-indigo-300 bg-clip-text text-transparent">
               Laboratories & Research Facilities
             </h1>
             <Badge variant="purple">{filteredLabs.length} Labs</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 mt-1 font-medium">
             Specialized computer labs, physics/chemistry facilities, and safety compliance.
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleOpenAddModal}
-          icon={<Plus className="w-4 h-4" />}
-        >
-          Register New Lab
-        </Button>
+        {!isStudent && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleOpenAddModal}
+            icon={<Plus className="w-4 h-4" />}
+          >
+            Register New Lab
+          </Button>
+        )}
       </div>
 
       {/* Filters Card */}
@@ -210,25 +215,25 @@ export const Labs = () => {
                     <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                       {lab.name}
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-xs font-semibold text-indigo-700 dark:text-indigo-300">
                       {lab.department}
                     </p>
                   </div>
                   <RoomStatusBadge status={lab.status} />
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400 pt-1">
-                  <span className="flex items-center gap-1.5">
-                    <Building className="w-3.5 h-3.5 text-slate-400" />
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 pt-1">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Building className="w-3.5 h-3.5 text-indigo-500" />
                     {lab.building}, Fl {lab.floor}
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-slate-400" />
-                    Cap: <strong>{lab.capacity} seats</strong>
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Users className="w-3.5 h-3.5 text-violet-500" />
+                    Cap: <strong className="text-slate-900 dark:text-white">{lab.capacity} seats</strong>
                   </span>
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 font-medium">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                    Safety: <strong className="text-slate-800 dark:text-slate-200">Class {lab.safetyRating}</strong>
+                    Safety: <strong className="text-slate-900 dark:text-white">Class {lab.safetyRating}</strong>
                   </span>
                   <span className="flex items-center gap-1.5 font-semibold">
                     Usage: <span className={getUtilizationColor(lab.utilization)}>{formatPercent(lab.utilization)}</span>
@@ -242,11 +247,11 @@ export const Labs = () => {
 
                 {/* Current Active Session */}
                 {lab.currentClass && (
-                  <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs">
-                    <p className="font-semibold text-slate-900 dark:text-slate-200 truncate">
+                  <div className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs">
+                    <p className="font-bold text-slate-900 dark:text-white truncate">
                       {lab.currentClass}
                     </p>
-                    <p className="text-[11px] text-slate-400 truncate">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate mt-0.5">
                       {lab.currentFaculty}
                     </p>
                   </div>
@@ -254,14 +259,14 @@ export const Labs = () => {
 
                 {/* Special Equipment Tags */}
                 <div className="space-y-1.5 pt-1">
-                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                     Equipment & Hardware
                   </p>
                   <div className="flex flex-wrap gap-1">
                     {lab.specialEquipment.map((eq, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[11px] font-medium text-slate-700 dark:text-slate-300"
+                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-semibold text-slate-800 dark:text-slate-200"
                       >
                         {eq}
                       </span>
@@ -270,11 +275,11 @@ export const Labs = () => {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+                <span className="font-semibold text-slate-800 dark:text-slate-200">
                   {lab.equipment.length} Tracked Assets
                 </span>
-                <span className="font-semibold text-blue-600 dark:text-blue-400 group-hover:underline">
+                <span className="font-bold text-blue-600 dark:text-blue-400 group-hover:underline">
                   View Facility Details →
                 </span>
               </div>

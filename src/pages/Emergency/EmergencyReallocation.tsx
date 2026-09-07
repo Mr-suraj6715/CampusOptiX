@@ -169,7 +169,7 @@ export const EmergencyReallocation = () => {
               <span className="text-xs text-slate-700 dark:text-slate-300">• Reported {incident.reportedAt}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-red-700 via-rose-600 to-orange-600 dark:from-red-400 dark:via-rose-300 dark:to-orange-300 bg-clip-text text-transparent">
               "{incident.room} has become unavailable."
             </h1>
 
@@ -204,21 +204,21 @@ export const EmergencyReallocation = () => {
       {/* Key Metric Counters */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">Affected Cohorts</span>
+          <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Affected Cohorts</span>
           <p className="text-2xl font-extrabold text-red-600 dark:text-red-400">
             {incident.affectedClassesCount} Classes Disrupted
           </p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">Affected Students</span>
+          <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Affected Students</span>
           <p className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">
             166 Students Total
           </p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase">Auto-Resolved State</span>
+          <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 uppercase">Auto-Resolved State</span>
           <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
             {incident.status === 'Resolved' ? '3 of 3 Reallocated' : 'Ready for Instant Dispatch'}
           </p>
@@ -247,7 +247,7 @@ export const EmergencyReallocation = () => {
             <Sparkles className="w-4 h-4 text-blue-600" />
             Recommended Immediate Alternatives
           </h2>
-          <span className="text-xs text-slate-400">Ranked by minimum travel distance & capacity</span>
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Ranked by minimum travel distance & capacity</span>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
@@ -268,7 +268,7 @@ export const EmergencyReallocation = () => {
                     <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                       {cls.name}
                     </h3>
-                    <span className="text-xs text-slate-400 font-mono">({cls.time})</span>
+                    <span className="text-xs text-indigo-700 dark:text-indigo-300 font-mono font-bold">({cls.time})</span>
                     {cls.resolved ? (
                       <Badge variant="success">Reassigned</Badge>
                     ) : (
@@ -276,7 +276,7 @@ export const EmergencyReallocation = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center gap-6 text-xs text-slate-600 dark:text-slate-400 flex-wrap">
+                  <div className="flex items-center gap-6 text-xs text-slate-800 dark:text-slate-200 flex-wrap font-medium">
                     <span className="flex items-center gap-1.5">
                       <Users className="w-3.5 h-3.5 text-slate-400" />
                       Cohort: <strong>{cls.students} Students</strong>
@@ -293,7 +293,7 @@ export const EmergencyReallocation = () => {
                     <div className="flex items-center gap-2">
                       <ArrowRight className="w-4 h-4 text-blue-600 shrink-0" />
                       <div>
-                        <span className="text-[10px] uppercase font-semibold text-slate-400">
+                        <span className="text-[10px] uppercase font-bold text-blue-700 dark:text-blue-300 tracking-wider">
                           Recommended Substitute Venue:
                         </span>
                         <p className="text-sm font-bold text-blue-600 dark:text-blue-400">

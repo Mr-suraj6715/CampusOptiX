@@ -193,12 +193,12 @@ export const Classes = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 dark:from-indigo-400 dark:via-blue-300 dark:to-cyan-300 bg-clip-text text-transparent">
               Class & Course Management
             </h1>
             <Badge variant="info">{filteredClasses.length} of {classesList.length} Classes</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 mt-1 font-medium">
             Manage course codes, divisions, student enrollments, equipment constraints, and venue allocations.
           </p>
         </div>
@@ -289,17 +289,17 @@ export const Classes = () => {
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-semibold uppercase text-[11px]">
+              <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3">Course Code & Subject</th>
-                  <th className="px-4 py-3">Department</th>
-                  <th className="px-4 py-3">Year / Div</th>
-                  <th className="px-4 py-3">Students</th>
-                  <th className="px-4 py-3">Faculty</th>
-                  <th className="px-4 py-3">Required Venue & Gear</th>
-                  <th className="px-4 py-3">Assigned Room</th>
-                  <th className="px-4 py-3">Time Slot</th>
-                  <th className="px-4 py-3 text-right">Actions</th>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300">Course Code & Subject</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300">Department</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300">Year / Div</th>
+                  <th className="px-4 py-3.5 text-purple-700 dark:text-purple-300">Students</th>
+                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300">Faculty</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300">Required Venue & Gear</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300">Assigned Room</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300">Time Slot</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -319,7 +319,7 @@ export const Classes = () => {
                           <p className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
                             {item.subject}
                           </p>
-                          <p className="text-[11px] text-slate-400 font-mono">
+                          <p className="text-xs text-slate-700 dark:text-slate-300 font-mono font-medium">
                             {item.credits} Credits • {item.type}
                           </p>
                         </div>
@@ -327,21 +327,23 @@ export const Classes = () => {
                     </td>
 
                     {/* Department */}
-                    <td className="px-4 py-3.5 text-slate-600 dark:text-slate-300">
-                      {item.department}
+                    <td className="px-4 py-3.5">
+                      <span className="text-indigo-700 dark:text-indigo-300 font-semibold text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800">
+                        {item.department}
+                      </span>
                     </td>
 
                     {/* Year & Division */}
-                    <td className="px-4 py-3.5 font-semibold text-slate-700 dark:text-slate-300">
-                      <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">
+                    <td className="px-4 py-3.5">
+                      <span className="px-2 py-0.5 rounded bg-violet-100 dark:bg-violet-950/60 text-violet-800 dark:text-violet-200 text-xs font-bold border border-violet-200 dark:border-violet-800">
                         Year {item.year} • {item.division}
                       </span>
                     </td>
 
                     {/* Students */}
-                    <td className="px-4 py-3.5 font-semibold text-slate-900 dark:text-slate-100">
+                    <td className="px-4 py-3.5 font-bold text-slate-900 dark:text-slate-100">
                       <div className="flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5 text-slate-400" />
+                        <Users className="w-3.5 h-3.5 text-blue-500" />
                         <span>{item.students} Enrolled</span>
                       </div>
                     </td>
@@ -357,7 +359,7 @@ export const Classes = () => {
                         <Badge variant="purple" className="capitalize">
                           {item.requiredRoomType.replace('-', ' ')}
                         </Badge>
-                        <p className="text-[11px] text-slate-400 truncate max-w-[150px]">
+                        <p className="text-[11px] text-emerald-600 dark:text-emerald-400 truncate max-w-[150px] font-medium">
                           {item.requiredEquipment.join(', ')}
                         </p>
                       </div>
@@ -372,9 +374,9 @@ export const Classes = () => {
                     </td>
 
                     {/* Time Slot */}
-                    <td className="px-4 py-3.5 text-xs text-slate-600 dark:text-slate-400 font-mono">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <td className="px-4 py-3.5">
+                      <div className="flex items-center gap-1 text-amber-700 dark:text-amber-300 font-mono font-semibold text-xs">
+                        <Clock className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
                         <span>{item.timeSlot}</span>
                       </div>
                     </td>
@@ -384,21 +386,21 @@ export const Classes = () => {
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => setViewingClass(item)}
-                          className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/60 rounded-lg"
+                          className="p-1.5 text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/60 rounded-lg"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleOpenEditModal(item)}
-                          className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                          className="p-1.5 text-slate-500 dark:text-slate-300 hover:text-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
                           title="Edit Class"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => setDeleteConfirmClass(item)}
-                          className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/60 rounded-lg"
+                          className="p-1.5 text-red-400 dark:text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/60 rounded-lg"
                           title="Delete Class"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -448,34 +450,34 @@ export const Classes = () => {
           <div className="space-y-4 text-xs">
             <div className="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
               <div>
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Course Code</span>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Course Code</span>
                 <p className="text-sm font-bold text-blue-600 dark:text-blue-400 font-mono">{viewingClass.code}</p>
               </div>
               <div>
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Subject</span>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Subject</span>
                 <p className="text-sm font-bold text-slate-900 dark:text-slate-100">{viewingClass.subject}</p>
               </div>
               <div>
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Department</span>
-                <p className="font-semibold text-slate-800 dark:text-slate-200">{viewingClass.department}</p>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Department</span>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">{viewingClass.department}</p>
               </div>
               <div>
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Cohort / Division</span>
-                <p className="font-semibold text-slate-800 dark:text-slate-200">Year {viewingClass.year} • {viewingClass.division}</p>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Cohort / Division</span>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">Year {viewingClass.year} • {viewingClass.division}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Instructor In-Charge</span>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Instructor In-Charge</span>
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{viewingClass.faculty}</p>
-                <p className="text-slate-500">Scheduled Time: <strong>{viewingClass.timeSlot}</strong></p>
+                <p className="text-slate-700 dark:text-slate-300 font-medium">Scheduled Time: <strong className="text-slate-950 dark:text-white font-bold">{viewingClass.timeSlot}</strong></p>
               </div>
 
               <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1">
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Allocated Venue</span>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-bold uppercase">Allocated Venue</span>
                 <p className="text-sm font-bold text-blue-600 dark:text-blue-400">{viewingClass.assignedRoom}</p>
-                <p className="text-slate-500">Cohort Size: <strong>{viewingClass.students} Students</strong></p>
+                <p className="text-slate-700 dark:text-slate-300 font-medium">Cohort Size: <strong className="text-slate-950 dark:text-white font-bold">{viewingClass.students} Students</strong></p>
               </div>
             </div>
 
@@ -669,8 +671,8 @@ export const Classes = () => {
             </>
           }
         >
-          <p className="text-xs text-slate-600 dark:text-slate-400">
-            Are you sure you want to remove <strong className="text-slate-900 dark:text-slate-100">{deleteConfirmClass.code} - {deleteConfirmClass.subject} ({deleteConfirmClass.division})</strong>?
+          <p className="text-xs font-medium text-slate-800 dark:text-slate-200">
+            Are you sure you want to remove <strong className="text-slate-950 dark:text-white font-bold">{deleteConfirmClass.code} - {deleteConfirmClass.subject} ({deleteConfirmClass.division})</strong>?
           </p>
         </Modal>
       )}

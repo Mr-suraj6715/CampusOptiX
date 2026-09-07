@@ -230,7 +230,7 @@ export const Simulation = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-300 dark:to-indigo-300 bg-clip-text text-transparent">
               What-If Campus Simulator
             </h1>
             <Badge variant="purple">AI Predictive Sandbox</Badge>
@@ -356,9 +356,9 @@ export const Simulation = () => {
       {/* ========================================================================= */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* CURRENT STATE */}
-        <Card padding="md" className="border-l-4 border-l-slate-400 space-y-3">
+        <Card padding="md" className="border-l-4 border-l-slate-400 dark:border-l-slate-600 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               CURRENT LIVE CAMPUS STATE
             </span>
             <Badge variant="slate">Baseline</Badge>
@@ -366,21 +366,21 @@ export const Simulation = () => {
 
           <div className="grid grid-cols-3 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Active Conflicts</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Active Conflicts</span>
               <p className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-0.5">3</p>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Campus Utilization</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Campus Utilization</span>
               <p className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-0.5">
                 {activeSimulationResult.currentUtilization}%
               </p>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Available Venues</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Available Venues</span>
               <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">8 Rooms</p>
             </div>
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
             Standard working timetable operating across 24 rooms.
           </p>
         </Card>
@@ -397,19 +397,19 @@ export const Simulation = () => {
 
           <div className="grid grid-cols-3 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-900">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">New Conflicts</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">New Conflicts</span>
               <p className="text-xl font-bold text-red-600 dark:text-red-400 mt-0.5">
                 +{activeSimulationResult.newConflicts}
               </p>
             </div>
             <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-900">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Projected Utilization</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Projected Utilization</span>
               <p className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-0.5">
                 {activeSimulationResult.expectedUtilization}%
               </p>
             </div>
             <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-900">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Affected Cohorts</span>
+              <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Affected Cohorts</span>
               <p className="text-xl font-bold text-amber-600 dark:text-amber-400 mt-0.5">
                 {activeSimulationResult.affectedClasses.length} Classes
               </p>
@@ -506,8 +506,8 @@ export const Simulation = () => {
             </div>
           </div>
 
-          <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
-            <span>Expected Utilization: <strong className="text-slate-900 dark:text-slate-100">{activeSimulationResult.expectedUtilization}%</strong></span>
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-800 dark:text-slate-200 font-medium">
+            <span>Expected Utilization: <strong className="text-slate-950 dark:text-white font-bold">{activeSimulationResult.expectedUtilization}%</strong></span>
             <Button
               variant="primary"
               size="sm"

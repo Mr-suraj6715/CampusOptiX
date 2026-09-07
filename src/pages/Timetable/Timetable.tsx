@@ -23,6 +23,7 @@ import { Select } from '@/components/ui/Select';
 import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { mockRooms, mockFacultyList, mockClassesList } from '@/data/mockData';
+import { useAuth } from '@/context/AuthContext';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
 const TIME_SLOTS = [
@@ -257,6 +258,8 @@ const initialSchedule: MatrixEntry[] = [
 ];
 
 export const Timetable = () => {
+  const { user } = useAuth();
+  const isStudent = user?.role === 'STUDENT';
   const [scheduleData, setScheduleData] = useState<MatrixEntry[]>(initialSchedule);
 
   // Filters (Section 10 Requirements)
@@ -372,7 +375,7 @@ export const Timetable = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Campus Master Timetable
             </h1>
             <Badge variant="info">Matrix View</Badge>
@@ -391,14 +394,16 @@ export const Timetable = () => {
           >
             Print Timetable
           </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => handleCellClick('Monday', '08:00 - 09:00')}
-            icon={<Plus className="w-4 h-4" />}
-          >
-            Book Slot
-          </Button>
+          {!isStudent && (
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => handleCellClick('Monday', '08:00 - 09:00')}
+              icon={<Plus className="w-4 h-4" />}
+            >
+              Book Slot
+            </Button>
+          )}
         </div>
       </div>
 
@@ -480,8 +485,8 @@ export const Timetable = () => {
         </div>
 
         {/* Visual State Legend */}
-        <div className="flex items-center gap-4 text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-100 dark:border-slate-800 flex-wrap">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">Slot Status Legend:</span>
+        <div className="flex items-center gap-4 text-xs text-slate-800 dark:text-slate-200 font-semibold pt-1 border-t border-slate-200 dark:border-slate-800 flex-wrap">
+          <span className="font-bold text-slate-950 dark:text-white">Slot Status Legend:</span>
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded bg-blue-500" />
             Standard Theory Lecture
@@ -506,14 +511,14 @@ export const Timetable = () => {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold">
-                <th className="p-3.5 text-left border-r border-slate-200 dark:border-slate-800 w-32 min-w-[120px]">
+              <tr className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
+                <th className="p-3.5 text-left border-r border-slate-300 dark:border-slate-600 w-32 min-w-[120px] text-amber-700 dark:text-amber-300">
                   Time Slot
                 </th>
                 {DAYS.map((day) => (
                   <th
                     key={day}
-                    className="p-3.5 text-center border-r border-slate-200 dark:border-slate-800 last:border-r-0 min-w-[190px]"
+                    className="p-3.5 text-center border-r border-slate-300 dark:border-slate-600 last:border-r-0 min-w-[190px] text-blue-700 dark:text-cyan-300"
                   >
                     {day}
                   </th>
@@ -527,12 +532,12 @@ export const Timetable = () => {
                 if (isLunchBreak) {
                   return (
                     <tr key={slotTime} className="bg-slate-100/60 dark:bg-slate-800/30">
-                      <td className="p-3 font-mono font-semibold text-slate-400 border-r border-slate-200 dark:border-slate-800">
+                      <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800">
                         {slotTime}
                       </td>
                       <td
                         colSpan={DAYS.length}
-                        className="p-2.5 text-center text-slate-400 font-semibold uppercase tracking-wider text-[11px]"
+                        className="p-2.5 text-center text-amber-700 dark:text-amber-300 font-bold uppercase tracking-wider text-[11px]"
                       >
                         — Campus Lunch Break & Resource Calibration Window —
                       </td>
@@ -542,7 +547,7 @@ export const Timetable = () => {
 
                 return (
                   <tr key={slotTime} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
-                    <td className="p-3 font-mono font-medium text-slate-500 dark:text-slate-400 border-r border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900">
+                    <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-xs">
                       {slotTime}
                     </td>
 
@@ -569,25 +574,25 @@ export const Timetable = () => {
                             >
                               {/* Subject & Code */}
                               <div className="flex items-center justify-between gap-1">
-                                <span className="font-bold text-slate-900 dark:text-slate-100 truncate">
+                                <span className="font-bold text-slate-900 dark:text-white truncate">
                                   {entry.subject}
                                 </span>
-                                <span className="font-mono text-[10px] font-bold text-blue-700 dark:text-blue-300">
+                                <span className="font-mono text-[10px] font-bold text-blue-700 dark:text-cyan-300">
                                   {entry.courseCode}
                                 </span>
                               </div>
 
                               {/* Faculty */}
-                              <p className="text-[11px] text-slate-600 dark:text-slate-300 truncate">
+                              <p className="text-[11px] text-blue-700 dark:text-sky-200 truncate font-medium">
                                 {entry.faculty}
                               </p>
 
                               {/* Room & Class/Division (Section 10 Requirements) */}
                               <div className="flex items-center justify-between text-[10px] font-semibold pt-0.5">
-                                <span className="px-1.5 py-0.2 rounded bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-mono">
+                                <span className="px-1.5 py-0.2 rounded bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-600 font-mono">
                                   {entry.room}
                                 </span>
-                                <span className="px-1.5 py-0.2 rounded bg-blue-100/80 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 font-mono">
+                                <span className="px-1.5 py-0.2 rounded bg-blue-100/90 dark:bg-blue-900/80 text-blue-900 dark:text-blue-100 font-mono">
                                   Yr {entry.year} • {entry.division}
                                 </span>
                               </div>
@@ -602,7 +607,7 @@ export const Timetable = () => {
                             </div>
                           ) : (
                             <div className="h-16 flex items-center justify-center border border-dashed border-transparent hover:border-slate-300 dark:hover:border-slate-700 rounded-lg group">
-                              <span className="text-[11px] text-slate-300 dark:text-slate-700 group-hover:text-slate-500 font-medium">
+                              <span className="text-[11px] text-slate-600 dark:text-slate-400 group-hover:text-blue-600 font-semibold">
                                 + Available
                               </span>
                             </div>
@@ -618,116 +623,203 @@ export const Timetable = () => {
         </div>
       </div>
 
-      {/* Edit / Book Slot Modal */}
+      {/* Slot Details / Booking Modal */}
       {selectedSlot && (
         <Modal
           open={!!selectedSlot}
           onClose={() => setSelectedSlot(null)}
-          title={selectedSlot.entry ? 'Edit Timetable Entry' : 'Book New Lecture / Lab Slot'}
-          description={`${selectedSlot.day} at ${selectedSlot.time}`}
+          title={
+            isStudent
+              ? selectedSlot.entry
+                ? `Lecture Info: ${selectedSlot.entry.subject}`
+                : `Vacant Time Slot`
+              : selectedSlot.entry
+              ? `Edit Schedule: ${selectedSlot.entry.courseCode}`
+              : `Book Timetable Slot`
+          }
+          description={
+            isStudent
+              ? `${selectedSlot.day} • ${selectedSlot.time}`
+              : `Configure academic slot allocation for ${selectedSlot.day} (${selectedSlot.time})`
+          }
           size="md"
           footer={
-            <div className="flex items-center justify-between w-full">
-              {selectedSlot.entry ? (
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={handleDeleteSlot}
-                >
-                  Clear Booking
-                </Button>
-              ) : <div />}
+            isStudent ? (
+              <Button variant="secondary" size="sm" onClick={() => setSelectedSlot(null)}>
+                Close
+              </Button>
+            ) : (
+              <div className="flex items-center justify-between w-full">
+                {selectedSlot.entry ? (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={handleDeleteSlot}
+                  >
+                    Clear Booking
+                  </Button>
+                ) : <div />}
 
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setSelectedSlot(null)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={handleSaveSlot}
-                >
-                  Save Timetable Slot
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setSelectedSlot(null)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={handleSaveSlot}
+                  >
+                    Save Timetable Slot
+                  </Button>
+                </div>
               </div>
-            </div>
+            )
           }
         >
-          <form onSubmit={handleSaveSlot} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                label="Course Code"
-                value={slotForm.courseCode}
-                onChange={(e) => setSlotForm({ ...slotForm, courseCode: e.target.value })}
-                required
-              />
-              <Input
-                label="Subject Name"
-                value={slotForm.subject}
-                onChange={(e) => setSlotForm({ ...slotForm, subject: e.target.value })}
-                required
-              />
-            </div>
+          {isStudent ? (
+            selectedSlot.entry ? (
+              <div className="space-y-4 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="font-mono font-bold text-blue-600 dark:text-blue-400 text-xs">
+                        {selectedSlot.entry.courseCode}
+                      </span>
+                      <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                        {selectedSlot.entry.subject}
+                      </h3>
+                    </div>
+                    <Badge variant={selectedSlot.entry.subject.toLowerCase().includes('lab') ? 'purple' : 'info'}>
+                      {selectedSlot.entry.subject.toLowerCase().includes('lab') ? 'Practical Lab' : 'Theory Lecture'}
+                    </Badge>
+                  </div>
 
-            <div className="grid grid-cols-3 gap-3">
-              <Select
-                label="Department"
-                value={slotForm.department}
-                onChange={(e) => setSlotForm({ ...slotForm, department: e.target.value })}
-                options={[
-                  { value: 'Computer Science', label: 'Computer Science' },
-                  { value: 'Mathematics', label: 'Mathematics' },
-                  { value: 'Physics', label: 'Physics' },
-                  { value: 'Chemistry', label: 'Chemistry' },
-                ]}
-              />
-              <Select
-                label="Year"
-                value={String(slotForm.year)}
-                onChange={(e) => setSlotForm({ ...slotForm, year: Number(e.target.value) })}
-                options={[
-                  { value: '1', label: 'Year 1' },
-                  { value: '2', label: 'Year 2' },
-                  { value: '3', label: 'Year 3' },
-                  { value: '4', label: 'Year 4' },
-                ]}
-              />
-              <Select
-                label="Division"
-                value={slotForm.division}
-                onChange={(e) => setSlotForm({ ...slotForm, division: e.target.value })}
-                options={[
-                  { value: 'Div A', label: 'Div A' },
-                  { value: 'Div B', label: 'Div B' },
-                  { value: 'Div C', label: 'Div C' },
-                ]}
-              />
-            </div>
+                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-200 dark:border-slate-700">
+                    <div>
+                      <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Instructor / Faculty</p>
+                      <p className="font-semibold text-slate-900 dark:text-white mt-0.5">
+                        {selectedSlot.entry.faculty}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Venue / Room</p>
+                      <p className="font-semibold text-blue-700 dark:text-blue-300 mt-0.5">
+                        {selectedSlot.entry.room}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Target Batch</p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-200 mt-0.5">
+                        Year {selectedSlot.entry.year} • {selectedSlot.entry.division}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Department</p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-200 mt-0.5">
+                        {selectedSlot.entry.department}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Select
-                label="Faculty Member"
-                value={slotForm.faculty}
-                onChange={(e) => setSlotForm({ ...slotForm, faculty: e.target.value })}
-                options={mockFacultyList.map((f) => ({ value: f.name, label: f.name }))}
-              />
-              <Select
-                label="Assigned Room"
-                value={slotForm.room}
-                onChange={(e) => setSlotForm({ ...slotForm, room: e.target.value })}
-                options={[
-                  ...mockRooms.map((r) => ({ value: r.name, label: r.name })),
-                  { value: 'CS Lab 1', label: 'CS Lab 1' },
-                  { value: 'DBMS Lab', label: 'DBMS Lab' },
-                  { value: 'Chemistry Lab', label: 'Chemistry Lab' },
-                ]}
-              />
-            </div>
-          </form>
+                {selectedSlot.entry.conflictType && selectedSlot.entry.conflictType !== 'none' && (
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold">Relocation / Optimization Notice</p>
+                      <p className="mt-0.5 font-medium">{selectedSlot.entry.conflictReason || 'Space optimization in progress by administration.'}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="py-6 text-center space-y-2">
+                <DoorOpen className="w-8 h-8 text-emerald-500 mx-auto" />
+                <h4 className="font-bold text-sm text-slate-950 dark:text-white">
+                  Vacant Slot ({selectedSlot.day} • {selectedSlot.time})
+                </h4>
+                <p className="text-xs font-medium text-slate-700 dark:text-slate-200 max-w-sm mx-auto">
+                  No lecture or practical is scheduled for this time slot. Classrooms and study lounges are open for self-study and revision.
+                </p>
+              </div>
+            )
+          ) : (
+            <form onSubmit={handleSaveSlot} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="Course Code"
+                  value={slotForm.courseCode}
+                  onChange={(e) => setSlotForm({ ...slotForm, courseCode: e.target.value })}
+                  required
+                />
+                <Input
+                  label="Subject Name"
+                  value={slotForm.subject}
+                  onChange={(e) => setSlotForm({ ...slotForm, subject: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <Select
+                  label="Department"
+                  value={slotForm.department}
+                  onChange={(e) => setSlotForm({ ...slotForm, department: e.target.value })}
+                  options={[
+                    { value: 'Computer Science', label: 'Computer Science' },
+                    { value: 'Mathematics', label: 'Mathematics' },
+                    { value: 'Physics', label: 'Physics' },
+                    { value: 'Chemistry', label: 'Chemistry' },
+                  ]}
+                />
+                <Select
+                  label="Year"
+                  value={String(slotForm.year)}
+                  onChange={(e) => setSlotForm({ ...slotForm, year: Number(e.target.value) })}
+                  options={[
+                    { value: '1', label: 'Year 1' },
+                    { value: '2', label: 'Year 2' },
+                    { value: '3', label: 'Year 3' },
+                    { value: '4', label: 'Year 4' },
+                  ]}
+                />
+                <Select
+                  label="Division"
+                  value={slotForm.division}
+                  onChange={(e) => setSlotForm({ ...slotForm, division: e.target.value })}
+                  options={[
+                    { value: 'Div A', label: 'Div A' },
+                    { value: 'Div B', label: 'Div B' },
+                    { value: 'Div C', label: 'Div C' },
+                  ]}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <Select
+                  label="Faculty Member"
+                  value={slotForm.faculty}
+                  onChange={(e) => setSlotForm({ ...slotForm, faculty: e.target.value })}
+                  options={mockFacultyList.map((f) => ({ value: f.name, label: f.name }))}
+                />
+                <Select
+                  label="Assigned Room"
+                  value={slotForm.room}
+                  onChange={(e) => setSlotForm({ ...slotForm, room: e.target.value })}
+                  options={[
+                    ...mockRooms.map((r) => ({ value: r.name, label: r.name })),
+                    { value: 'CS Lab 1', label: 'CS Lab 1' },
+                    { value: 'DBMS Lab', label: 'DBMS Lab' },
+                    { value: 'Chemistry Lab', label: 'Chemistry Lab' },
+                  ]}
+                />
+              </div>
+            </form>
+          )}
         </Modal>
       )}
     </div>

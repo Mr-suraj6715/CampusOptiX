@@ -36,19 +36,19 @@ export const Button = ({
     variant === 'primary'
       ? { backgroundColor: 'var(--bg-inverse)', color: 'var(--text-inverse)' }
       : variant === 'danger'
-      ? { backgroundColor: '#ef4444', color: '#fff' }
-      : {};
+        ? { backgroundColor: '#ef4444', color: '#fff' }
+        : {};
 
   const variantClassName =
     variant === 'primary'
       ? 'btn-inverse hover:opacity-90'
       : variant === 'secondary'
-      ? 'btn-subtle border border-[--border-primary]'
-      : variant === 'ghost'
-      ? 'btn-subtle'
-      : variant === 'danger'
-      ? 'rounded-full font-semibold hover:opacity-90'
-      : '';
+        ? 'btn-subtle border border-[--border-primary]'
+        : variant === 'ghost'
+          ? 'btn-subtle'
+          : variant === 'danger'
+            ? 'rounded-full font-semibold hover:opacity-90'
+            : '';
 
   return (
     <button

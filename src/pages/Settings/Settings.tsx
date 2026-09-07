@@ -109,7 +109,7 @@ export const Settings = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-blue-300 dark:to-indigo-300 bg-clip-text text-transparent">
               System Settings & Heuristic Tuning
             </h1>
             <Badge variant="info">Admin Configuration</Badge>

@@ -32,8 +32,11 @@ import { SearchBar } from '@/components/shared/SearchBar';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { mockFacultyList } from '@/data/mockData';
 import type { Faculty, FacultyStatus } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 
 export const FacultyPage = () => {
+  const { user } = useAuth();
+  const isStudent = user?.role === 'STUDENT';
   const navigate = useNavigate();
   const [facultyList, setFacultyList] = useState<Faculty[]>(mockFacultyList);
   const [searchQuery, setSearchQuery] = useState('');
@@ -164,24 +167,26 @@ export const FacultyPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 dark:from-cyan-400 dark:via-teal-300 dark:to-emerald-300 bg-clip-text text-transparent">
               Faculty Directory & Profile Center
             </h1>
             <Badge variant="info">{filteredFaculty.length} Instructors</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 mt-1 font-medium">
             Track teaching availability, scheduling preferences, allocated course divisions, and potential conflicts.
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={handleOpenAddModal}
-          icon={<Plus className="w-4 h-4" />}
-        >
-          Add Faculty Member
-        </Button>
+        {!isStudent && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleOpenAddModal}
+            icon={<Plus className="w-4 h-4" />}
+          >
+            Add Faculty Member
+          </Button>
+        )}
       </div>
 
       {/* Filters Card */}
@@ -246,16 +251,16 @@ export const FacultyPage = () => {
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 font-semibold uppercase text-[11px]">
+              <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3">Faculty ID & Name</th>
-                  <th className="px-4 py-3">Department</th>
-                  <th className="px-4 py-3">Availability</th>
-                  <th className="px-4 py-3">Preferred Time</th>
-                  <th className="px-4 py-3">Preferred Building</th>
-                  <th className="px-4 py-3">Assigned Classes</th>
-                  <th className="px-4 py-3">Workload / Quota</th>
-                  <th className="px-4 py-3 text-right">Profile</th>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300">Faculty ID & Name</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300">Department</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300">Availability</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300">Preferred Time</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300">Preferred Building</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300">Assigned Classes</th>
+                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300">Workload / Quota</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200">Profile</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -284,7 +289,7 @@ export const FacultyPage = () => {
                                 </span>
                               )}
                             </p>
-                            <span className="text-[11px] font-mono text-slate-400">
+                            <span className="text-[11px] font-mono font-bold text-indigo-700 dark:text-indigo-300">
                               {faculty.id} • {faculty.designation}
                             </span>
                           </div>
@@ -292,8 +297,10 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Department */}
-                      <td className="px-4 py-3.5 text-slate-600 dark:text-slate-300">
-                        {faculty.department}
+                      <td className="px-4 py-3.5">
+                        <span className="text-indigo-700 dark:text-indigo-300 font-semibold text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800">
+                          {faculty.department}
+                        </span>
                       </td>
 
                       {/* Availability */}
@@ -311,17 +318,17 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Preferred Time */}
-                      <td className="px-4 py-3.5 text-xs text-slate-700 dark:text-slate-300">
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-slate-400" />
+                      <td className="px-4 py-3.5">
+                        <div className="flex items-center gap-1 text-amber-700 dark:text-amber-300 font-semibold text-xs">
+                          <Clock className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                           <span>{faculty.preferredTime}</span>
                         </div>
                       </td>
 
                       {/* Preferred Building */}
-                      <td className="px-4 py-3.5 font-semibold text-slate-700 dark:text-slate-300">
-                        <div className="flex items-center gap-1">
-                          <Building className="w-3.5 h-3.5 text-slate-400" />
+                      <td className="px-4 py-3.5">
+                        <div className="flex items-center gap-1 text-violet-700 dark:text-violet-300 font-semibold text-xs">
+                          <Building className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
                           <span>{faculty.preferredBuilding}</span>
                         </div>
                       </td>
@@ -404,7 +411,7 @@ export const FacultyPage = () => {
             {/* Top Stat Summary */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Teaching Workload</span>
+                <span className="text-[11px] text-blue-700 dark:text-blue-300 font-bold uppercase tracking-wider">Teaching Workload</span>
                 <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
                   {selectedFacultyProfile.workload} / {selectedFacultyProfile.maxWorkload} hrs/wk
                 </p>
@@ -417,7 +424,7 @@ export const FacultyPage = () => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Preferred Time Slot</span>
+                <span className="text-[11px] text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">Preferred Time Slot</span>
                 <p className="text-sm font-bold text-blue-600 dark:text-blue-400 mt-1 flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
                   {selectedFacultyProfile.preferredTime}
@@ -425,7 +432,7 @@ export const FacultyPage = () => {
               </div>
 
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800">
-                <span className="text-[11px] text-slate-400 font-semibold uppercase">Preferred Campus Wing</span>
+                <span className="text-[11px] text-violet-700 dark:text-violet-300 font-bold uppercase tracking-wider">Preferred Campus Wing</span>
                 <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1.5">
                   <Building className="w-3.5 h-3.5" />
                   {selectedFacultyProfile.preferredBuilding}
@@ -435,7 +442,7 @@ export const FacultyPage = () => {
 
             {/* Availability Days */}
             <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5">
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+              <span className="text-[11px] text-slate-800 dark:text-slate-200 font-bold uppercase tracking-wider">
                 Weekly Availability Profile
               </span>
               <div className="flex items-center gap-2">
@@ -447,7 +454,7 @@ export const FacultyPage = () => {
                       className={`px-2.5 py-1 rounded-md text-xs font-bold ${
                         isAvail
                           ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-400 line-through'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 line-through'
                       }`}
                     >
                       {d}
@@ -479,31 +486,31 @@ export const FacultyPage = () => {
 
             {/* Faculty Timetable Schedule */}
             <div className="space-y-2">
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+              <span className="text-xs text-indigo-600 dark:text-cyan-400 font-bold uppercase tracking-wider">
                 Allocated Weekly Lecture & Lab Slots ({selectedFacultyProfile.schedule.length})
               </span>
               {selectedFacultyProfile.schedule.length > 0 ? (
-                <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
+                <div className="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-xl">
                   <table className="w-full text-left">
-                    <thead className="bg-slate-50 dark:bg-slate-800 text-slate-500 font-semibold text-[11px]">
+                    <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                       <tr>
-                        <th className="px-3 py-2">Day</th>
-                        <th className="px-3 py-2">Time Slot</th>
-                        <th className="px-3 py-2">Course Code & Name</th>
-                        <th className="px-3 py-2">Cohort</th>
-                        <th className="px-3 py-2">Assigned Venue</th>
-                        <th className="px-3 py-2">Status</th>
+                        <th className="px-3.5 py-2.5 text-blue-700 dark:text-cyan-300">Day</th>
+                        <th className="px-3.5 py-2.5 text-amber-700 dark:text-amber-300">Time Slot</th>
+                        <th className="px-3.5 py-2.5 text-indigo-700 dark:text-indigo-300">Course Code & Name</th>
+                        <th className="px-3.5 py-2.5 text-violet-700 dark:text-violet-300">Cohort</th>
+                        <th className="px-3.5 py-2.5 text-emerald-700 dark:text-emerald-300">Assigned Venue</th>
+                        <th className="px-3.5 py-2.5 text-sky-700 dark:text-sky-300">Status</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                       {selectedFacultyProfile.schedule.map((s) => (
                         <tr key={s.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
-                          <td className="px-3 py-2 font-bold">{s.day}</td>
-                          <td className="px-3 py-2 font-mono text-slate-600 dark:text-slate-300">{s.startTime} - {s.endTime}</td>
-                          <td className="px-3 py-2 font-semibold text-blue-600 dark:text-blue-400">{s.courseCode}: {s.course}</td>
-                          <td className="px-3 py-2 font-mono">Yr {s.year} • {s.division}</td>
-                          <td className="px-3 py-2 font-mono">{s.room}</td>
-                          <td className="px-3 py-2">
+                          <td className="px-3.5 py-2.5 font-bold text-slate-900 dark:text-white">{s.day}</td>
+                          <td className="px-3.5 py-2.5 font-mono font-semibold text-amber-600 dark:text-amber-300">{s.startTime} - {s.endTime}</td>
+                          <td className="px-3.5 py-2.5 font-semibold text-blue-700 dark:text-cyan-300">{s.courseCode}: {s.course}</td>
+                          <td className="px-3.5 py-2.5 font-mono font-medium text-violet-700 dark:text-violet-300">Yr {s.year} • {s.division}</td>
+                          <td className="px-3.5 py-2.5 font-mono font-bold text-emerald-700 dark:text-emerald-300">{s.room}</td>
+                          <td className="px-3.5 py-2.5">
                             {s.isConflict ? (
                               <Badge variant="error">Conflict</Badge>
                             ) : (
@@ -516,7 +523,7 @@ export const FacultyPage = () => {
                   </table>
                 </div>
               ) : (
-                <p className="text-slate-400 italic p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                <p className="text-slate-700 dark:text-slate-300 italic font-medium p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
                   No individual slots allocated yet.
                 </p>
               )}

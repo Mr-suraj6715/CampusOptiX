@@ -151,7 +151,7 @@ export const Notifications = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 dark:from-amber-400 dark:via-orange-300 dark:to-rose-300 bg-clip-text text-transparent">
               Notification & Alert Center
             </h1>
             {unreadCount > 0 && <Badge variant="error">{unreadCount} Unread</Badge>}

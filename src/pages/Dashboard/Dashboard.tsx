@@ -35,12 +35,24 @@ import {
   dailyResourceUsage,
   mockRecommendations,
 } from '@/data/mockData';
+import { useAuth } from '@/context/AuthContext';
+import { StudentDashboard } from './StudentDashboard';
+import { FacultyDashboard } from './FacultyDashboard';
 
 export const Dashboard = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
-
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedRecommendation, setSelectedRecommendation] = useState<any>(null);
+
+  // Role-specific Dashboards
+  if (user?.role === 'STUDENT') {
+    return <StudentDashboard />;
+  }
+
+  if (user?.role === 'FACULTY') {
+    return <FacultyDashboard />;
+  }
 
   const handleLoadDemoScenario = () => {
     setToastMessage('Primary Demo Scenario Loaded: DBMS Lab Capacity Conflict (65 students vs 40 cap).');
@@ -115,7 +127,7 @@ export const Dashboard = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-cyan-300 dark:via-blue-300 dark:to-indigo-300 bg-clip-text text-transparent">
             Campus Command Center
           </h1>
           <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-tertiary)' }}>

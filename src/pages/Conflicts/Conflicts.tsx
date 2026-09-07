@@ -127,13 +127,13 @@ export const Conflicts = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 dark:from-rose-400 dark:via-red-300 dark:to-amber-300 bg-clip-text text-transparent">
               Campus Conflict Management Dashboard
             </h1>
             {criticalCount > 0 && <Badge variant="error">{criticalCount} Critical</Badge>}
             <Badge variant="warning">{openCount} Active</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 mt-1 font-medium">
             Automated conflict resolution across capacity limits, timetable overlaps, instructor availability, and equipment needs.
           </p>
         </div>
@@ -151,7 +151,7 @@ export const Conflicts = () => {
       {/* Conflict Category Filter Pills (Section 11 Requirements) */}
       <Card padding="sm" className="space-y-3">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-          <span className="text-xs font-semibold text-slate-500 mr-2 shrink-0">
+          <span className="text-xs font-bold text-slate-800 dark:text-slate-200 mr-2 shrink-0">
             Categories:
           </span>
           <button
@@ -159,7 +159,7 @@ export const Conflicts = () => {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
               categoryFilter === 'all'
                 ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
+                : 'bg-slate-200/80 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/60 dark:border-slate-700'
             }`}
           >
             All Categories ({conflictsList.length})
@@ -173,7 +173,7 @@ export const Conflicts = () => {
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   categoryFilter === cat
                     ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
+                    : 'bg-slate-200/80 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300/60 dark:border-slate-700'
                 }`}
               >
                 {cat} ({count})
@@ -182,7 +182,7 @@ export const Conflicts = () => {
           })}
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-2 flex-wrap gap-2">
+        <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800 pt-2 flex-wrap gap-2">
           <Tabs
             tabs={[
               { id: 'all', label: 'All Statuses' },
@@ -196,16 +196,16 @@ export const Conflicts = () => {
           />
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400">Severity Filter:</span>
+            <span className="text-xs font-bold text-slate-800 dark:text-slate-200">Severity Filter:</span>
             <div className="flex items-center gap-1">
               {['all', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW'].map((sev) => (
                 <button
                   key={sev}
                   onClick={() => setSeverityFilter(sev)}
-                  className={`px-2.5 py-0.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`px-2.5 py-0.5 rounded-lg text-xs font-bold transition-all ${
                     severityFilter === sev
                       ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      : 'text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800'
                   }`}
                 >
                   {sev}
@@ -242,7 +242,7 @@ export const Conflicts = () => {
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     {getSeverityBadge(conflict.severity)}
-                    <span className="font-mono text-xs text-slate-400">{conflict.id}</span>
+                    <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-300">{conflict.id}</span>
                   </div>
                   <Badge variant="purple">{conflict.category}</Badge>
                 </div>
@@ -252,25 +252,25 @@ export const Conflicts = () => {
                   <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
                     {conflict.course}
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{conflict.subject}</p>
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">{conflict.subject}</p>
                 </div>
 
                 {/* Assigned Room & Capacity & Students (Matching prompt example) */}
                 <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs">
                   <div>
-                    <span className="text-[10px] text-slate-400 font-semibold uppercase">Assigned Room</span>
+                    <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Assigned Room</span>
                     <p className="font-bold text-slate-900 dark:text-slate-100">{conflict.room}</p>
                     {conflict.roomCapacity && (
-                      <p className="text-slate-500 text-[11px]">Room Capacity: <strong>{conflict.roomCapacity}</strong></p>
+                      <p className="text-slate-700 dark:text-slate-300 text-xs font-medium">Room Capacity: <strong className="text-slate-950 dark:text-white font-bold">{conflict.roomCapacity}</strong></p>
                     )}
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-slate-400 font-semibold uppercase">Enrolled Cohort</span>
+                    <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Enrolled Cohort</span>
                     <p className="font-bold text-slate-900 dark:text-slate-100">
                       {conflict.studentCount ? `${conflict.studentCount} Students` : 'Multi-Section'}
                     </p>
-                    <p className="text-slate-500 text-[11px] font-mono">{conflict.time}</p>
+                    <p className="text-slate-700 dark:text-slate-300 text-xs font-mono font-medium">{conflict.time}</p>
                   </div>
                 </div>
 
@@ -287,8 +287,8 @@ export const Conflicts = () => {
               </div>
 
               {/* Action Button: [View Recommendation] */}
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Detected {timeAgo(conflict.detectedAt)}
                 </span>
                 <Button
@@ -364,11 +364,11 @@ export const Conflicts = () => {
             </div>
 
             {/* Action Details */}
-            <div className="space-y-1.5 text-slate-600 dark:text-slate-400">
-              <p className="font-semibold text-slate-900 dark:text-slate-100">
+            <div className="space-y-1.5 text-slate-800 dark:text-slate-200">
+              <p className="font-bold text-slate-950 dark:text-white">
                 Automated System Adjustments:
               </p>
-              <ul className="list-disc pl-5 space-y-1">
+              <ul className="list-disc pl-5 space-y-1 font-medium">
                 <li>Reconfigures master schedule grid and frees up bottlenecked room.</li>
                 <li>Sends immediate calendar notifications to affected students & faculty.</li>
                 <li>Recalculates department resource efficiency and updates telemetry.</li>

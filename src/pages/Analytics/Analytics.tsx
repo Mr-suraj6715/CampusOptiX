@@ -103,12 +103,12 @@ export const Analytics = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-300 dark:to-violet-300 bg-clip-text text-transparent">
               Campus Resource Analytics & Audit
             </h1>
             <Badge variant="info">Telemetry Insights</Badge>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 mt-1 font-medium">
             Quantitative space efficiency, peak hourly loads, bottleneck rates, and before-vs-after optimization benchmarks.
           </p>
         </div>
@@ -143,60 +143,60 @@ export const Analytics = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
         {/* 1. Overall Utilization */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Overall Util</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Overall Util</span>
           <p className="text-lg font-extrabold text-blue-600 dark:text-blue-400">62%</p>
-          <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-0.5">
+          <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5">
             <ArrowUpRight className="w-3 h-3" /> +14% QoQ
           </span>
         </Card>
 
         {/* 2. Room Utilization */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Room Util</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Room Util</span>
           <p className="text-lg font-extrabold text-slate-900 dark:text-slate-100">68%</p>
-          <span className="text-[10px] text-slate-400">24 Classrooms</span>
+          <span className="text-[10px] text-slate-700 dark:text-slate-300 font-semibold">24 Classrooms</span>
         </Card>
 
         {/* 3. Lab Utilization */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Lab Util</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Lab Util</span>
           <p className="text-lg font-extrabold text-purple-600 dark:text-purple-400">74%</p>
-          <span className="text-[10px] text-slate-400">8 Facilities</span>
+          <span className="text-[10px] text-slate-700 dark:text-slate-300 font-semibold">8 Facilities</span>
         </Card>
 
         {/* 4. Peak Hours */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Peak Hours</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Peak Hours</span>
           <p className="text-sm font-extrabold text-slate-900 dark:text-slate-100 mt-1">10:00 - 12:00</p>
-          <span className="text-[10px] text-orange-500 font-semibold">1,520 Students</span>
+          <span className="text-[10px] text-orange-600 font-bold">1,520 Students</span>
         </Card>
 
         {/* 5. Underutilization */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Underutil.</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Underutil.</span>
           <p className="text-lg font-extrabold text-amber-600 dark:text-amber-400">29%</p>
-          <span className="text-[10px] text-slate-400">7 Low load spaces</span>
+          <span className="text-[10px] text-slate-700 dark:text-slate-300 font-semibold">7 Low load spaces</span>
         </Card>
 
         {/* 6. Overcrowding */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Overcrowd</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Overcrowd</span>
           <p className="text-lg font-extrabold text-red-600 dark:text-red-400">8.3%</p>
-          <span className="text-[10px] text-red-500">2 Sections</span>
+          <span className="text-[10px] text-red-600 font-semibold">2 Sections</span>
         </Card>
 
         {/* 7. Conflict Rate */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Conflict Rate</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Conflict Rate</span>
           <p className="text-lg font-extrabold text-slate-900 dark:text-slate-100">2.1%</p>
-          <span className="text-[10px] text-slate-400">3 of 142 slots</span>
+          <span className="text-[10px] text-slate-700 dark:text-slate-300 font-semibold">3 of 142 slots</span>
         </Card>
 
         {/* 8. Resolution Rate */}
         <Card padding="sm" className="space-y-1">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase">Res. Rate</span>
+          <span className="text-[10px] font-bold text-slate-800 dark:text-slate-200 uppercase">Res. Rate</span>
           <p className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">94.6%</p>
-          <span className="text-[10px] text-emerald-500">Auto-Resolved</span>
+          <span className="text-[10px] text-emerald-600 font-bold">Auto-Resolved</span>
         </Card>
       </div>
 

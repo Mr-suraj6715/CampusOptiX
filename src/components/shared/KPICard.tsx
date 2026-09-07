@@ -79,8 +79,8 @@ export const KPICard = ({
                   trend.direction === 'up'
                     ? 'text-emerald-500'
                     : trend.direction === 'down'
-                    ? 'text-red-500'
-                    : 'text-[--text-tertiary]'
+                      ? 'text-red-500'
+                      : 'text-[--text-tertiary]'
                 )}
               >
                 {trend.direction === 'up' && <TrendingUp className="w-3 h-3" />}

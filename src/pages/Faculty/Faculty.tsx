@@ -253,14 +253,14 @@ export const FacultyPage = () => {
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300">Faculty ID & Name</th>
-                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300">Department</th>
-                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300">Availability</th>
-                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300">Preferred Time</th>
-                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300">Preferred Building</th>
-                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300">Assigned Classes</th>
-                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300">Workload / Quota</th>
-                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200">Profile</th>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300 min-w-[210px] w-[20%]">Faculty ID & Name</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[130px] w-[11%]">Department</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[140px] w-[12%]">Availability</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[140px] w-[12%]">Preferred Time</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[120px] w-[11%]">Preferred Building</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300 min-w-[180px] w-[15%]">Assigned Classes</th>
+                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300 whitespace-nowrap min-w-[130px] w-[12%]">Workload / Quota</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-[100px] w-[7%]">Profile</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -275,21 +275,21 @@ export const FacultyPage = () => {
                       onClick={() => setSelectedFacultyProfile(faculty)}
                     >
                       {/* Faculty ID & Name */}
-                      <td className="px-4 py-3.5">
+                      <td className="px-4 py-3.5 align-middle">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-xs">
+                          <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-xs shrink-0">
                             {faculty.name.split(' ').map((n) => n[0]).slice(-2).join('')}
                           </div>
                           <div>
-                            <p className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                            <p className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 whitespace-nowrap">
                               {faculty.name}
                               {hasPotentialConflicts && (
                                 <span title="Potential Conflict Detected">
-                                  <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                                  <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                                 </span>
                               )}
                             </p>
-                            <span className="text-[11px] font-mono font-bold text-indigo-700 dark:text-indigo-300">
+                            <span className="text-[11px] font-mono font-bold text-indigo-700 dark:text-indigo-300 whitespace-nowrap">
                               {faculty.id} • {faculty.designation}
                             </span>
                           </div>
@@ -297,19 +297,19 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Department */}
-                      <td className="px-4 py-3.5">
-                        <span className="text-indigo-700 dark:text-indigo-300 font-semibold text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800">
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                        <span className="inline-block text-indigo-700 dark:text-indigo-300 font-semibold text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-md border border-indigo-200 dark:border-indigo-800 whitespace-nowrap">
                           {faculty.department}
                         </span>
                       </td>
 
                       {/* Availability */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-1">
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           {faculty.availability.map((day) => (
                             <span
                               key={day}
-                              className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                              className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
                             >
                               {day}
                             </span>
@@ -318,28 +318,28 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Preferred Time */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-1 text-amber-700 dark:text-amber-300 font-semibold text-xs">
-                          <Clock className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                        <div className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300 font-semibold text-xs whitespace-nowrap bg-amber-50/60 dark:bg-amber-950/40 px-2.5 py-1 rounded-md border border-amber-200/60 dark:border-amber-800/60">
+                          <Clock className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
                           <span>{faculty.preferredTime}</span>
                         </div>
                       </td>
 
                       {/* Preferred Building */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-1 text-violet-700 dark:text-violet-300 font-semibold text-xs">
-                          <Building className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                        <div className="inline-flex items-center gap-1.5 text-violet-700 dark:text-violet-300 font-semibold text-xs whitespace-nowrap bg-violet-50/60 dark:bg-violet-950/40 px-2.5 py-1 rounded-md border border-violet-200/60 dark:border-violet-800/60">
+                          <Building className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400 shrink-0" />
                           <span>{faculty.preferredBuilding}</span>
                         </div>
                       </td>
 
                       {/* Assigned Classes */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex flex-wrap gap-1 max-w-[200px]">
+                      <td className="px-4 py-3.5 align-middle">
+                        <div className="flex flex-wrap gap-1 max-w-[220px]">
                           {faculty.assignedClasses.map((cls, i) => (
                             <span
                               key={i}
-                              className="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 font-mono text-[11px] font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                              className="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 font-mono text-[11px] font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 whitespace-nowrap"
                             >
                               {cls}
                             </span>
@@ -348,8 +348,8 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Workload */}
-                      <td className="px-4 py-3.5 w-32">
-                        <div className="space-y-1">
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                        <div className="space-y-1 w-32">
                           <div className="flex items-center justify-between text-[11px] font-bold">
                             <span className={isOverloaded ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'}>
                               {faculty.workload} / {faculty.maxWorkload} hrs
@@ -365,7 +365,7 @@ export const FacultyPage = () => {
                       </td>
 
                       {/* Profile Button */}
-                      <td className="px-4 py-3.5 text-right" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         <Button
                           variant="ghost"
                           size="sm"

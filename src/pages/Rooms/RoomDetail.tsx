@@ -342,35 +342,37 @@ export const RoomDetail = () => {
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3 text-blue-700 dark:text-cyan-300">Day</th>
-                  <th className="px-4 py-3 text-amber-700 dark:text-amber-300">Time Slot</th>
-                  <th className="px-4 py-3 text-indigo-700 dark:text-indigo-300">Course Code</th>
-                  <th className="px-4 py-3 text-purple-700 dark:text-purple-300">Course Name</th>
-                  <th className="px-4 py-3 text-pink-700 dark:text-pink-300">Faculty</th>
-                  <th className="px-4 py-3 text-violet-700 dark:text-violet-300">Cohort</th>
-                  <th className="px-4 py-3 text-emerald-700 dark:text-emerald-300">Enrolled</th>
+                  <th className="px-4 py-3 text-blue-700 dark:text-cyan-300 whitespace-nowrap min-w-[100px] w-[12%]">Day</th>
+                  <th className="px-4 py-3 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[140px] w-[15%]">Time Slot</th>
+                  <th className="px-4 py-3 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[120px] w-[13%]">Course Code</th>
+                  <th className="px-4 py-3 text-purple-700 dark:text-purple-300 min-w-[200px] w-[25%]">Course Name</th>
+                  <th className="px-4 py-3 text-pink-700 dark:text-pink-300 whitespace-nowrap min-w-[140px] w-[15%]">Faculty</th>
+                  <th className="px-4 py-3 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[110px] w-[10%]">Cohort</th>
+                  <th className="px-4 py-3 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[100px] w-[10%]">Enrolled</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {room.schedule.map((slot) => (
                   <tr key={slot.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
-                    <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">
+                    <td className="px-4 py-3 font-bold text-slate-900 dark:text-white align-middle whitespace-nowrap">
                       {slot.day}
                     </td>
-                    <td className="px-4 py-3 font-mono font-semibold text-amber-600 dark:text-amber-300">
+                    <td className="px-4 py-3 font-mono font-semibold text-amber-600 dark:text-amber-300 align-middle whitespace-nowrap">
                       {slot.startTime} - {slot.endTime}
                     </td>
-                    <td className="px-4 py-3 font-mono font-bold text-blue-700 dark:text-cyan-300">
+                    <td className="px-4 py-3 font-mono font-bold text-blue-700 dark:text-cyan-300 align-middle whitespace-nowrap">
                       {slot.courseCode}
                     </td>
-                    <td className="px-4 py-3 font-semibold text-slate-900 dark:text-slate-100">
+                    <td className="px-4 py-3 font-semibold text-slate-900 dark:text-slate-100 align-middle">
                       {slot.course}
                     </td>
-                    <td className="px-4 py-3 font-medium text-pink-700 dark:text-pink-300">
+                    <td className="px-4 py-3 font-medium text-pink-700 dark:text-pink-300 align-middle whitespace-nowrap">
                       {slot.faculty}
                     </td>
-                    <td className="px-4 py-3 font-mono font-medium text-violet-700 dark:text-violet-300">Yr {slot.year} • {slot.division}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 font-mono font-medium text-violet-700 dark:text-violet-300 align-middle whitespace-nowrap">
+                      Yr {slot.year} • {slot.division}
+                    </td>
+                    <td className="px-4 py-3 align-middle whitespace-nowrap">
                       <span className="font-bold text-emerald-700 dark:text-emerald-300">
                         {slot.enrolled} / {room.capacity}
                       </span>

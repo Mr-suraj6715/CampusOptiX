@@ -512,13 +512,13 @@ export const Timetable = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
-                <th className="p-3.5 text-left border-r border-slate-300 dark:border-slate-600 w-32 min-w-[120px] text-amber-700 dark:text-amber-300">
+                <th className="p-3.5 text-center border-r border-slate-300 dark:border-slate-600 w-32 min-w-[130px] text-amber-700 dark:text-amber-300 whitespace-nowrap">
                   Time Slot
                 </th>
                 {DAYS.map((day) => (
                   <th
                     key={day}
-                    className="p-3.5 text-center border-r border-slate-300 dark:border-slate-600 last:border-r-0 min-w-[190px] text-blue-700 dark:text-cyan-300"
+                    className="p-3.5 text-center border-r border-slate-300 dark:border-slate-600 last:border-r-0 min-w-[180px] w-[14.28%] text-blue-700 dark:text-cyan-300 whitespace-nowrap"
                   >
                     {day}
                   </th>
@@ -532,12 +532,12 @@ export const Timetable = () => {
                 if (isLunchBreak) {
                   return (
                     <tr key={slotTime} className="bg-slate-100/60 dark:bg-slate-800/30">
-                      <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800">
+                      <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800 text-center align-middle whitespace-nowrap">
                         {slotTime}
                       </td>
                       <td
                         colSpan={DAYS.length}
-                        className="p-2.5 text-center text-amber-700 dark:text-amber-300 font-bold uppercase tracking-wider text-[11px]"
+                        className="p-3 text-center text-amber-700 dark:text-amber-300 font-bold uppercase tracking-wider text-[11px] align-middle"
                       >
                         — Campus Lunch Break & Resource Calibration Window —
                       </td>
@@ -547,7 +547,7 @@ export const Timetable = () => {
 
                 return (
                   <tr key={slotTime} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
-                    <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-xs">
+                    <td className="p-3 font-mono font-bold text-amber-700 dark:text-amber-300 border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-xs text-center align-middle whitespace-nowrap">
                       {slotTime}
                     </td>
 
@@ -558,11 +558,11 @@ export const Timetable = () => {
                         <td
                           key={day}
                           onClick={() => handleCellClick(day, slotTime)}
-                          className="p-2 border-r border-slate-200 dark:border-slate-800 last:border-r-0 align-top cursor-pointer hover:bg-blue-50/30 dark:hover:bg-blue-950/20 transition-all min-h-[90px]"
+                          className="p-2 border-r border-slate-200 dark:border-slate-800 last:border-r-0 align-top cursor-pointer hover:bg-blue-50/30 dark:hover:bg-blue-950/20 transition-all h-[96px]"
                         >
                           {entry ? (
                             <div
-                              className={`p-2.5 rounded-xl border text-xs space-y-1.5 transition-all shadow-xs ${
+                              className={`p-2.5 rounded-xl border text-xs flex flex-col justify-between h-full min-h-[84px] space-y-1.5 transition-all shadow-xs ${
                                 entry.conflictType === 'double-booking'
                                   ? 'bg-red-50 dark:bg-red-950/60 border-red-400 dark:border-red-800 ring-1 ring-red-400'
                                   : entry.conflictType === 'capacity'
@@ -577,7 +577,7 @@ export const Timetable = () => {
                                 <span className="font-bold text-slate-900 dark:text-white truncate">
                                   {entry.subject}
                                 </span>
-                                <span className="font-mono text-[10px] font-bold text-blue-700 dark:text-cyan-300">
+                                <span className="font-mono text-[10px] font-bold text-blue-700 dark:text-cyan-300 shrink-0">
                                   {entry.courseCode}
                                 </span>
                               </div>
@@ -589,10 +589,10 @@ export const Timetable = () => {
 
                               {/* Room & Class/Division (Section 10 Requirements) */}
                               <div className="flex items-center justify-between text-[10px] font-semibold pt-0.5">
-                                <span className="px-1.5 py-0.2 rounded bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-600 font-mono">
+                                <span className="px-1.5 py-0.2 rounded bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-600 font-mono whitespace-nowrap">
                                   {entry.room}
                                 </span>
-                                <span className="px-1.5 py-0.2 rounded bg-blue-100/90 dark:bg-blue-900/80 text-blue-900 dark:text-blue-100 font-mono">
+                                <span className="px-1.5 py-0.2 rounded bg-blue-100/90 dark:bg-blue-900/80 text-blue-900 dark:text-blue-100 font-mono whitespace-nowrap">
                                   Yr {entry.year} • {entry.division}
                                 </span>
                               </div>
@@ -600,14 +600,14 @@ export const Timetable = () => {
                               {/* Conflict Alerts */}
                               {entry.conflictType !== 'none' && (
                                 <div className="flex items-center gap-1 text-[10px] font-bold text-red-600 dark:text-red-400 pt-0.5 animate-pulse">
-                                  <AlertTriangle className="w-3 h-3" />
+                                  <AlertTriangle className="w-3 h-3 shrink-0" />
                                   <span>{entry.conflictType === 'capacity' ? 'Capacity Overload' : 'Conflict'}</span>
                                 </div>
                               )}
                             </div>
                           ) : (
-                            <div className="h-16 flex items-center justify-center border border-dashed border-transparent hover:border-slate-300 dark:hover:border-slate-700 rounded-lg group">
-                              <span className="text-[11px] text-slate-600 dark:text-slate-400 group-hover:text-blue-600 font-semibold">
+                            <div className="h-full min-h-[84px] flex items-center justify-center border border-dashed border-transparent hover:border-slate-300 dark:hover:border-slate-700 rounded-lg group">
+                              <span className="text-[11px] text-slate-600 dark:text-slate-400 group-hover:text-blue-600 font-semibold whitespace-nowrap">
                                 + Available
                               </span>
                             </div>

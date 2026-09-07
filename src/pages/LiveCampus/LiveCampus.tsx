@@ -555,47 +555,55 @@ export const LiveCampus = () => {
       {/* 3. LIST VIEW */}
       {viewMode === 'list' && (
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs">
-          <table className="w-full text-left text-xs sm:text-sm">
-            <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
-              <tr>
-                <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300">Room Code & Name</th>
-                <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300">Building & Floor</th>
-                <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300">Capacity</th>
-                <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300">Live Status</th>
-                <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300">Current Active Course</th>
-                <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300">Time Left</th>
-                <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200">Details</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {filteredRooms.map((r) => (
-                <tr key={r.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
-                  <td className="px-4 py-3 font-bold font-mono text-slate-900 dark:text-slate-100">
-                    {r.code} - {r.name}
-                  </td>
-                  <td className="px-4 py-3 font-medium text-slate-700 dark:text-slate-300">{r.building}, Fl {r.floor}</td>
-                  <td className="px-4 py-3 font-bold text-slate-900 dark:text-slate-100">{r.capacity} seats</td>
-                  <td className="px-4 py-3">{getStatusBadge(r.status)}</td>
-                  <td className="px-4 py-3 text-blue-700 dark:text-cyan-300 font-semibold">
-                    {r.currentCourse || '— Vacant —'}
-                  </td>
-                  <td className="px-4 py-3 font-mono font-semibold text-amber-600 dark:text-amber-300">
-                    {r.timeRemaining ? `${r.timeRemaining} mins` : '—'}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="sm" onClick={() => setCctvRoom(r)} title="Live CCTV">
-                        <Eye className="w-4 h-4 text-emerald-600" />
-                      </Button>
-                      <Button variant="ghost" size="sm" onClick={() => navigate('/rooms/R001')}>
-                        View
-                      </Button>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs sm:text-sm">
+              <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
+                <tr>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300 min-w-[180px] w-[22%]">Room Code & Name</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[130px] w-[14%]">Building & Floor</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[110px] w-[10%]">Capacity</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[110px] w-[11%]">Live Status</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300 min-w-[200px] w-[25%]">Current Active Course</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[110px] w-[10%]">Time Left</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-[100px] w-[8%]">Details</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                {filteredRooms.map((r) => (
+                  <tr key={r.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
+                    <td className="px-4 py-3 font-bold font-mono text-slate-900 dark:text-slate-100 align-middle whitespace-nowrap">
+                      {r.code} - {r.name}
+                    </td>
+                    <td className="px-4 py-3 font-medium text-slate-700 dark:text-slate-300 align-middle whitespace-nowrap">
+                      {r.building}, Fl {r.floor}
+                    </td>
+                    <td className="px-4 py-3 font-bold text-slate-900 dark:text-slate-100 align-middle whitespace-nowrap">
+                      {r.capacity} seats
+                    </td>
+                    <td className="px-4 py-3 align-middle whitespace-nowrap">
+                      {getStatusBadge(r.status)}
+                    </td>
+                    <td className="px-4 py-3 text-blue-700 dark:text-cyan-300 font-semibold align-middle">
+                      {r.currentCourse || '— Vacant —'}
+                    </td>
+                    <td className="px-4 py-3 font-mono font-semibold text-amber-600 dark:text-amber-300 align-middle whitespace-nowrap">
+                      {r.timeRemaining ? `${r.timeRemaining} mins` : '—'}
+                    </td>
+                    <td className="px-4 py-3 text-right align-middle whitespace-nowrap">
+                      <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="sm" onClick={() => setCctvRoom(r)} title="Live CCTV">
+                          <Eye className="w-4 h-4 text-emerald-600" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => navigate('/rooms/R001')}>
+                          View
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 

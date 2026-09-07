@@ -301,14 +301,14 @@ export const Rooms = () => {
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300">Room Info</th>
-                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300">Location</th>
-                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300">Capacity</th>
-                  <th className="px-4 py-3.5 text-purple-700 dark:text-purple-300">Type</th>
-                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300">Status</th>
-                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300">Utilization</th>
-                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300">Current Activity</th>
-                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200">Actions</th>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300 min-w-[200px] w-[22%]">Room Info</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[130px] w-[12%]">Location</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[110px] w-[10%]">Capacity</th>
+                  <th className="px-4 py-3.5 text-purple-700 dark:text-purple-300 whitespace-nowrap min-w-[120px] w-[11%]">Type</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[110px] w-[11%]">Status</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[140px] w-[14%]">Utilization</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300 min-w-[180px] w-[15%]">Current Activity</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-[90px] w-[5%]">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -319,16 +319,16 @@ export const Rooms = () => {
                     onClick={() => navigate(`/rooms/${room.id}`)}
                   >
                     {/* Room ID & Name */}
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-3.5 align-middle">
                       <div className="flex items-center gap-2.5">
-                        <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-mono font-bold text-xs">
+                        <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-mono font-bold text-xs shrink-0">
                           {room.id}
                         </div>
                         <div>
-                          <p className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          <p className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors whitespace-nowrap">
                             {room.name}
                           </p>
-                          <p className="text-[11px] text-violet-700 dark:text-violet-300 font-mono font-medium">
+                          <p className="text-[11px] text-violet-700 dark:text-violet-300 font-mono font-medium whitespace-nowrap">
                             {room.amenities.slice(0, 2).join(' • ')}
                           </p>
                         </div>
@@ -336,36 +336,36 @@ export const Rooms = () => {
                     </td>
 
                     {/* Location */}
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
                       <div className="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-300 font-medium">
-                        <Building className="w-3.5 h-3.5 text-indigo-400 dark:text-indigo-400" />
-                        <span>{room.building}, Fl {room.floor}</span>
+                        <Building className="w-3.5 h-3.5 text-indigo-400 dark:text-indigo-400 shrink-0" />
+                        <span className="whitespace-nowrap">{room.building}, Fl {room.floor}</span>
                       </div>
                     </td>
 
                     {/* Capacity */}
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
                       <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-slate-100">
-                        <Users className="w-3.5 h-3.5 text-blue-500" />
-                        <span>{room.capacity} seats</span>
+                        <Users className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                        <span className="whitespace-nowrap">{room.capacity} seats</span>
                       </div>
                     </td>
 
                     {/* Type */}
-                    <td className="px-4 py-3.5">
-                      <span className="capitalize text-purple-700 dark:text-purple-300 font-semibold text-xs bg-purple-50 dark:bg-purple-950/50 px-2 py-0.5 rounded-md border border-purple-200 dark:border-purple-800">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                      <span className="inline-block capitalize text-purple-700 dark:text-purple-300 font-semibold text-xs bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-md border border-purple-200 dark:border-purple-800 whitespace-nowrap">
                         {room.type.replace('-', ' ')}
                       </span>
                     </td>
 
                     {/* Status */}
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
                       <RoomStatusBadge status={room.status} />
                     </td>
 
                     {/* Utilization */}
-                    <td className="px-4 py-3.5 w-36">
-                      <div className="space-y-1">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                      <div className="space-y-1 w-36">
                         <ProgressBar value={room.utilization} size="sm" />
                         <span className={`text-[11px] font-bold ${getUtilizationColor(room.utilization)}`}>
                           {formatPercent(room.utilization)}
@@ -374,9 +374,9 @@ export const Rooms = () => {
                     </td>
 
                     {/* Current Activity */}
-                    <td className="px-4 py-3.5 text-xs max-w-xs truncate">
+                    <td className="px-4 py-3.5 align-middle text-xs">
                       {room.currentClass ? (
-                        <div>
+                        <div className="max-w-xs">
                           <p className="font-semibold text-sky-800 dark:text-sky-200 truncate">
                             {room.currentClass}
                           </p>
@@ -385,12 +385,12 @@ export const Rooms = () => {
                           </p>
                         </div>
                       ) : (
-                        <span className="text-slate-700 dark:text-slate-300 italic font-medium">No class active</span>
+                        <span className="text-slate-700 dark:text-slate-300 italic font-medium whitespace-nowrap">No class active</span>
                       )}
                     </td>
 
                     {/* Actions */}
-                    <td className="px-4 py-3.5 text-right" onClick={(e) => e.stopPropagation()}>
+                    <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => navigate(`/rooms/${room.id}`)}

@@ -253,14 +253,14 @@ export const FacultyPage = () => {
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-300 dark:border-slate-600 font-bold uppercase tracking-widest text-[11px]">
                 <tr>
-                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300 min-w-[210px] w-[20%]">Faculty ID & Name</th>
-                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[130px] w-[11%]">Department</th>
-                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[140px] w-[12%]">Availability</th>
-                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[140px] w-[12%]">Preferred Time</th>
-                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[120px] w-[11%]">Preferred Building</th>
-                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300 min-w-[180px] w-[15%]">Assigned Classes</th>
-                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300 whitespace-nowrap min-w-[130px] w-[12%]">Workload / Quota</th>
-                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-[100px] w-[7%]">Profile</th>
+                  <th className="px-4 py-3.5 text-blue-700 dark:text-cyan-300 min-w-[190px] w-[18%]">Faculty ID & Name</th>
+                  <th className="px-4 py-3.5 text-indigo-700 dark:text-indigo-300 whitespace-nowrap min-w-[115px] w-[9%]">Department</th>
+                  <th className="px-4 py-3.5 text-emerald-700 dark:text-emerald-300 whitespace-nowrap min-w-[125px] w-[10%]">Availability</th>
+                  <th className="px-4 py-3.5 text-amber-700 dark:text-amber-300 whitespace-nowrap min-w-[130px] w-[11%]">Preferred Time</th>
+                  <th className="px-4 py-3.5 text-violet-700 dark:text-violet-300 whitespace-nowrap min-w-[105px] w-[9%]">Preferred Building</th>
+                  <th className="px-4 py-3.5 text-sky-700 dark:text-sky-300 min-w-[230px] w-[21%]">Assigned Classes</th>
+                  <th className="px-4 py-3.5 text-pink-700 dark:text-pink-300 whitespace-nowrap min-w-[150px] w-[13%]">Workload / Quota</th>
+                  <th className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-[95px] w-[9%]">Profile</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -335,24 +335,43 @@ export const FacultyPage = () => {
 
                       {/* Assigned Classes */}
                       <td className="px-4 py-3.5 align-middle">
-                        <div className="flex flex-wrap gap-1 max-w-[220px]">
-                          {faculty.assignedClasses.map((cls, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 font-mono text-[11px] font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 whitespace-nowrap"
-                            >
-                              {cls}
-                            </span>
-                          ))}
+                        <div className="flex flex-col gap-1.5 min-w-[210px] max-w-[260px]">
+                          {faculty.assignedClasses.map((cls, i) => {
+                            const match = cls.match(/^(.*?)\s*\((.*?)\)$/);
+                            const name = match ? match[1] : cls;
+                            const codeDiv = match ? match[2] : '';
+
+                            return (
+                              <div
+                                key={i}
+                                className="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[11px]"
+                                title={cls}
+                              >
+                                <div className="flex items-center justify-between gap-1.5">
+                                  <span className="font-bold text-blue-900 dark:text-blue-100 truncate">
+                                    {name}
+                                  </span>
+                                  {codeDiv && (
+                                    <span className="font-mono text-[10px] font-bold text-blue-700 dark:text-cyan-300 shrink-0 bg-blue-100/90 dark:bg-blue-900/80 px-1.5 py-0.2 rounded border border-blue-200 dark:border-blue-700">
+                                      {codeDiv}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       </td>
 
                       {/* Workload */}
-                      <td className="px-4 py-3.5 align-middle whitespace-nowrap">
-                        <div className="space-y-1 w-32">
+                      <td className="px-4 py-3.5 align-middle whitespace-nowrap min-w-[150px]">
+                        <div className="space-y-1.5 w-32">
                           <div className="flex items-center justify-between text-[11px] font-bold">
-                            <span className={isOverloaded ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'}>
+                            <span className={isOverloaded ? 'text-red-600 font-extrabold' : 'text-slate-800 dark:text-slate-200'}>
                               {faculty.workload} / {faculty.maxWorkload} hrs
+                            </span>
+                            <span className={`text-[10px] font-semibold ${isOverloaded ? 'text-red-500' : 'text-slate-500 dark:text-slate-400'}`}>
+                              {Math.round((faculty.workload / faculty.maxWorkload) * 100)}%
                             </span>
                           </div>
                           <ProgressBar

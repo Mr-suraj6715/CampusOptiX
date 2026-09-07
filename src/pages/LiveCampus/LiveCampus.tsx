@@ -608,26 +608,40 @@ export const LiveCampus = () => {
       )}
 
       {/* Live Telemetry Sensor Stream Log */}
-      <Card padding="md" className="space-y-3 bg-slate-900 text-slate-200 border-slate-800">
+      <Card padding="md" className="space-y-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <Activity className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100">
               Live IoT Sensor Telemetry Stream
             </h3>
           </div>
-          <span className="text-[10px] font-mono text-slate-500">
+          <span className="text-[11px] font-mono font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">
             Auto-ticks every 4s • Active
           </span>
         </div>
 
-        <div className="space-y-1.5 font-mono text-xs text-slate-200 font-medium">
-          {sensorEventLog.map((log, idx) => (
-            <p key={idx} className="flex items-center gap-2">
-              <span className="text-emerald-400 font-bold">▸</span>
-              <span>{log}</span>
-            </p>
-          ))}
+        <div className="space-y-1.5 font-mono text-xs bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80">
+          {sensorEventLog.map((log, idx) => {
+            const parts = log.split(' - ');
+            const timePart = parts[0] || '';
+            const rest = parts.slice(1).join(' - ');
+            const colonIndex = rest.indexOf(':');
+            const sensorPart = colonIndex !== -1 ? rest.substring(0, colonIndex + 1) : '';
+            const msgPart = colonIndex !== -1 ? rest.substring(colonIndex + 1) : rest;
+
+            return (
+              <p key={idx} className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold shrink-0">▸</span>
+                <span className="text-blue-700 dark:text-cyan-300 font-bold shrink-0">{timePart}</span>
+                <span className="text-slate-400 dark:text-slate-600 shrink-0">-</span>
+                {sensorPart && (
+                  <span className="text-indigo-700 dark:text-indigo-300 font-bold shrink-0">{sensorPart}</span>
+                )}
+                <span className="text-slate-900 dark:text-slate-100 font-semibold">{msgPart}</span>
+              </p>
+            );
+          })}
         </div>
       </Card>
 

@@ -91,6 +91,8 @@
    to become dark and readable in light mode. ──────────── */
 
 /* Slate / Gray / Zinc pale shades */
+.text-slate-100, .text-gray-100, .text-zinc-100 { color: #0f172a !important; }
+.text-slate-200, .text-gray-200, .text-zinc-200 { color: #1e293b !important; }
 .text-slate-300, .text-gray-300, .text-zinc-300 { color: #374151 !important; }
 .text-slate-400, .text-gray-400, .text-zinc-400 { color: #1f2937 !important; }
 .text-slate-500, .text-gray-500, .text-zinc-500 { color: #111827 !important; }
@@ -121,6 +123,8 @@
 .text-teal-300 { color: #0f766e !important; }
 
 /* ── Dark mode: restore the original pale/bright colors ── */
+.dark .text-slate-100, .dark .text-gray-100, .dark .text-zinc-100  { color: #f1f5f9 !important; }
+.dark .text-slate-200, .dark .text-gray-200, .dark .text-zinc-200  { color: #e2e8f0 !important; }
 .dark .text-slate-300, .dark .text-gray-300, .dark .text-zinc-300  { color: #d1d5db !important; }
 .dark .text-slate-400, .dark .text-gray-400, .dark .text-zinc-400  { color: #e5e7eb !important; }
 .dark .text-slate-500, .dark .text-gray-500, .dark .text-zinc-500  { color: #f3f4f6 !important; }

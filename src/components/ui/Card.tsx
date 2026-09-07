@@ -20,6 +20,7 @@ export const Card = ({
   className,
   padding = 'md',
   hoverEffect = false,
+  style,
   ...props
 }: CardProps) => (
   <div
@@ -29,10 +30,7 @@ export const Card = ({
       paddingClasses[padding],
       className
     )}
-    style={{
-      backgroundColor: 'var(--surface-1)',
-      borderColor: 'var(--border-primary)',
-    }}
+    style={style}
     {...props}
   >
     {children}
